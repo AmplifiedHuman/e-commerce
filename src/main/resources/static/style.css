@@ -1,0 +1,22 @@
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.main-container {
+    flex: 1;
+}
+
+.navbar-start {
+    width: 100%;
+}
+
+.footer {
+    padding: 30px;
+}
+
+#search-box, #search-box.input {
+    flex-grow: 1;
+    margin-right: 1rem;
+}
