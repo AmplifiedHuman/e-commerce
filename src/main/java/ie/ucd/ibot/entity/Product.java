@@ -36,6 +36,12 @@ public class Product implements Serializable {
     @Column
     private double price;
 
+    @Column
+    private boolean isHidden;
+
+    @Column
+    private double discountRate;
+
     public Long getId() {
         return id;
     }
@@ -93,10 +99,27 @@ public class Product implements Serializable {
     }
 
     public double getPrice() {
-        return price;
+        return price * (1 - discountRate);
     }
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public boolean isHidden() {
+        return isHidden;
+    }
+
+    public void setHidden(boolean hidden) {
+        isHidden = hidden;
+    }
+
+
+    public double getDiscountRate() {
+        return discountRate;
+    }
+
+    public void setDiscountRate(double discountRate) {
+        this.discountRate = discountRate;
     }
 }
