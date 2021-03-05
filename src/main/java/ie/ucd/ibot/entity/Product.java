@@ -4,7 +4,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Timestamp;
 import java.util.Set;
 
 @Entity
@@ -14,20 +14,19 @@ public class Product implements Serializable {
     private Long id;
 
     @CreationTimestamp
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column
-    private Date createdDate;
+    @Column(updatable = false)
+    private Timestamp createdDate;
 
     @Column
     private String name;
 
-    @Column
+    @Column(length = 2000)
     private String description;
 
-    @Column
+    @Column(length = 300)
     private String imageURL;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     private Set<Category> categories;
 
     @Column
@@ -48,14 +47,6 @@ public class Product implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Date getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
     }
 
     public String getName() {
@@ -106,6 +97,10 @@ public class Product implements Serializable {
         this.price = price;
     }
 
+    public double getOriginalPrice() {
+        return price;
+    }
+
     public boolean isHidden() {
         return isHidden;
     }
@@ -121,5 +116,13 @@ public class Product implements Serializable {
 
     public void setDiscountRate(double discountRate) {
         this.discountRate = discountRate;
+    }
+
+    public Timestamp getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Timestamp createdDate) {
+        this.createdDate = createdDate;
     }
 }

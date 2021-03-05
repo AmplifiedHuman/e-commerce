@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head><title></title></head>
+
+<body>
+
+<div class="columns is-align-items-flex-end is-multiline is-centered" th:fragment="cards(productList)">
+    <!--/*@thymesVar id="isHidden" type=""*/-->
+    <a th:each="product : ${productList}" th:include="fragments/cards.html :: card(${product})"
+       th:if="${!product.isHidden}" class="column container"></a>
+</div>
+
+<a th:fragment="card(productInput)" href="#" th:with="product=${productInput}">
+    <!--/*@thymesVar id="product" type="ie.ucd.ibot.entity.Product"*/-->
+    <div class="card is-paddingless product-card">
+        <div class="card-image">
+            <figure class="image is-square">
+                <img th:src="${product.getImageURL()}" alt="Placeholder image" src="">
+            </figure>
+        </div>
+        <div class="card-content">
+            <div class="media is-marginless">
+                <div class="media-content is-flex is-justify-content-space-around">
+                    <p class="title is-5" th:text="${product.getName()}"></p>
+                </div>
+            </div>
+            <div class="container is-justify-content-center is-flex mt-3">
+                <p class="is-4 has-text-primary subtitle is-flex-shrink-0"
+                   th:text="${#numbers.formatCurrency(product.price)}"></p>
+                <p class="is-size-7 has-text-danger strike-through is-flex-shrink-0"
+                   th:text="${product.getDiscountRate == 0} ? '' :
+                       ${#numbers.formatCurrency(product.getOriginalPrice)}"></p>
+            </div>
+            <div class="buttons container are-small">
+                <button class="button is-link is-light is-rounded" th:each="category : ${product.categories}"
+                        th:text="${category.getName()}">Category
+                </button>
+            </div>
+            <button class="button is-black is-rounded is-align-self-flex-end is-fullwidth">Add To Cart</button>
+        </div>
+    </div>
+</a>
+
+</body>
+
+</html>

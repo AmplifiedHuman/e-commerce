@@ -1,3 +1,4 @@
+// Menu bar
 document.addEventListener('DOMContentLoaded', () => {
     const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
     if ($navbarBurgers.length > 0) {
@@ -11,3 +12,16 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+// Search
+const search = () => {
+    const searchBox = document.querySelector("#search-input");
+    searchBox.addEventListener('keydown', e => {
+        const searchString = document.querySelector("#search-input").value;
+        const baseURL = window.location.origin;
+        if (e.key === 'Enter') {
+            window.location = baseURL + "/search?name=" + encodeURI(searchString);
+        }
+    });
+}
+search();

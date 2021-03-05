@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <link rel="stylesheet" th:href="@{/style.css}">
+    <script th:src="@{/script.js}" defer></script>
+    <script src="https://kit.fontawesome.com/d29d7d4ce7.js" crossorigin="anonymous"></script>
+    <title>Document</title>
+</head>
+
+<body>
+<header th:replace="fragments/general.html :: header"></header>
+<div class="main-container container my-6">
+    <div class="is-flex is-justify-content-center is-align-items-baseline container is-flex-grow-5">
+        <h2 class="title is-3 mb-6 is-capitalized"
+            th:text="Search">
+            Products</h2>
+        <h3 class="subtitle mx-2" th:text="'(' + ${total} + ' results)'">Number of results</h3>
+    </div>
+    <div th:replace="fragments/cards.html :: cards(${products})"></div>
+    <!--    Pagination-->
+    <div class="buttons container is-flex is-justify-content-center">
+        <a th:if="${currentPage > 1}"
+           th:href="@{''(name=${searchString},page=${currentPage - 1})}">
+            <button class="button is-primary is-light pagination-button mx-2">Previous</button>
+        </a>
+        <a th:if="${currentPage < totalPage}" th:href="@{''(name=${searchString},page=${currentPage + 1})}">
+            <button class="button is-primary is-light pagination-button mx-2">Next</button>
+        </a>
+    </div>
+</div>
+<footer th:replace="fragments/general.html :: footer"></footer>
+</body>
+
+</html>
