@@ -53,6 +53,12 @@
             <div class="navbar-end">
                 <div class="navbar-item">
                     <div class="buttons">
+                        <a class="button" th:href="@{/cart/}">
+                            <span class="icon">
+                              <i class="fas fa-shopping-basket"></i>
+                            </span>
+                            <span id="cart-total-amount">GitHub</span>
+                        </a>
                         <a class="button is-primary">
                             <strong>Sign up</strong>
                         </a>
@@ -73,6 +79,7 @@
         <a class="fab fa-2x fa-twitter footer-icon column is-narrow has-text-dark" th:href="@{#}"></a>
     </div>
 </footer>
+
 </body>
 
 </html>

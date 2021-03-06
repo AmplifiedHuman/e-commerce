@@ -5,7 +5,6 @@
 <body>
 
 <div class="columns is-align-items-flex-end is-multiline is-centered" th:fragment="cards(productList)">
-    <!--/*@thymesVar id="isHidden" type=""*/-->
     <a th:each="product : ${productList}" th:include="fragments/cards.html :: card(${product})"
        th:if="${!product.isHidden}" class="column container"></a>
 </div>
@@ -36,7 +35,9 @@
                         th:text="${category.getName()}">Category
                 </button>
             </div>
-            <button class="button is-black is-rounded is-align-self-flex-end is-fullwidth">Add To Cart</button>
+            <button class="button is-black is-rounded is-align-self-flex-end is-fullwidth"
+                    th:attr="onclick=|editCart(${product.id},1,true,false,this)|">Add To Cart
+            </button>
         </div>
     </div>
 </a>

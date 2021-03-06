@@ -37,4 +37,8 @@ public class ProductService {
     public Page<Product> findByName(String searchString, Pageable pageable) {
         return productRepository.findByNameContainingIgnoreCase(searchString, pageable);
     }
+
+    public Optional<Product> findByID(long id) {
+        return productRepository.findById(id);
+    }
 }

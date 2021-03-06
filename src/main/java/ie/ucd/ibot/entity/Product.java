@@ -41,6 +41,9 @@ public class Product implements Serializable {
     @Column
     private double discountRate;
 
+    @OneToMany(mappedBy = "product", orphanRemoval = true)
+    private Set<CartItem> items;
+
     public Long getId() {
         return id;
     }
@@ -124,5 +127,13 @@ public class Product implements Serializable {
 
     public void setCreatedDate(Timestamp createdDate) {
         this.createdDate = createdDate;
+    }
+
+    public Set<CartItem> getItems() {
+        return items;
+    }
+
+    public void setItems(Set<CartItem> items) {
+        this.items = items;
     }
 }
