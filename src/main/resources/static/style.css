@@ -35,3 +35,7 @@ body {
 .strike-through {
     text-decoration: line-through;
 }
+
+.login-container {
+    width: 300px;
+}

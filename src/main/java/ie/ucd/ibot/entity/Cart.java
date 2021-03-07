@@ -1,44 +1,28 @@
 package ie.ucd.ibot.entity;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.annotation.SessionScope;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
 @Component
-@SessionScope
+@Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
 @Entity
 public class Cart implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
-    @OneToMany(mappedBy = "cart")
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CartItem> cartItems;
 
-    public CartItem getCartItem(long productID) {
-        for (CartItem item : cartItems) {
-            if (item.getProduct().getId() == productID) {
-                return item;
-            }
-        }
-        return null;
-    }
-
-    public void removeCartItem(long productID) {
-        CartItem removed = null;
-        for (CartItem item : cartItems) {
-            if (item.getProduct().getId() == productID) {
-                removed = item;
-            }
-        }
-        if (removed != null) {
-            cartItems.remove(removed);
-            removed.setCart(null);
-        }
-    }
+    @OneToOne(mappedBy = "cart")
+    private User user;
 
     public double getTotal() {
         double total = 0;
@@ -51,6 +35,11 @@ public class Cart implements Serializable {
     public void addItem(CartItem item) {
         cartItems.add(item);
         item.setCart(this);
+    }
+
+    public void removeItem(CartItem item) {
+        cartItems.remove(item);
+        item.setCart(null);
     }
 
     public long getId() {
@@ -67,5 +56,13 @@ public class Cart implements Serializable {
 
     public void setCartItems(List<CartItem> cartItems) {
         this.cartItems = cartItems;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

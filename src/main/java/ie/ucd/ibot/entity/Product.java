@@ -41,7 +41,7 @@ public class Product implements Serializable {
     @Column
     private double discountRate;
 
-    @OneToMany(mappedBy = "product", orphanRemoval = true)
+    @OneToMany(mappedBy = "product", cascade=CascadeType.ALL)
     private Set<CartItem> items;
 
     public Long getId() {
@@ -135,5 +135,10 @@ public class Product implements Serializable {
 
     public void setItems(Set<CartItem> items) {
         this.items = items;
+    }
+
+    public void addItem(CartItem item) {
+        items.add(item);
+        item.setProduct(this);
     }
 }

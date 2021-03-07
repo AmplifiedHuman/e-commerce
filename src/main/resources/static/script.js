@@ -60,10 +60,14 @@ const deleteFromCart = (productID, button) => {
     fetch(baseURL + "/cart/delete", {
         method: 'POST',
         body: data,
-    }).then(() => {
-        updateTotal(true);
-        button.closest("tr").remove();
-    })
+    }).then(r => r.json())
+        .then(result => {
+            console.log(result);
+            if (result.success) {
+                updateTotal(true);
+                button.closest("tr").remove();
+            }
+        });
 }
 
 const updateTotal = (updateCartPrice) => {

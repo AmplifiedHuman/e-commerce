@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head><title></title></head>
 
 <body>
@@ -59,11 +59,14 @@
                             </span>
                             <span id="cart-total-amount">GitHub</span>
                         </a>
-                        <a class="button is-primary">
+                        <a class="button is-primary" th:href="@{/register}" sec:authorize="isAnonymous()">
                             <strong>Sign up</strong>
                         </a>
-                        <a class="button is-light">
+                        <a class="button is-light" th:href="@{/login}" sec:authorize="isAnonymous()">
                             Log in
+                        </a>
+                        <a class="button is-light" th:href="@{/logout}" sec:authorize="isAuthenticated()">
+                            Sign out
                         </a>
                     </div>
                 </div>

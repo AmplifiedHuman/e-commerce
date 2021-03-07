@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <link rel="stylesheet" th:href="@{/style.css}">
+    <script th:src="@{/script.js}" defer></script>
+    <script src="https://kit.fontawesome.com/d29d7d4ce7.js" crossorigin="anonymous"></script>
+    <title>Document</title>
+</head>
+
+<body>
+<header th:replace="fragments/general.html :: header"></header>
+<div class="main-container container my-6 login-container">
+    <!-- Logged In Users -->
+    <div sec:authorize="isAuthenticated()" class="container has-text-centered has-text-info">
+        <h1>You're already logged in!</h1>
+    </div>
+    <div sec:authorize="isAnonymous()" class="container">
+        <h1 class="title is-2 has-text-centered mb-6">
+            Register</h1>
+        <div>
+            <form th:action="@{/register}" th:object="${user}" method="POST">
+                <div>
+                    <p class="my-3">
+                        <label class="subtitle">First Name</label>
+                    </p>
+                    <input th:field="*{firstName}" class="input" type="text" placeholder="John"/>
+                    <p th:each="error: ${#fields.errors('firstName')}" class="has-text-danger"
+                       th:text="${error}">Validation error</p>
+                </div>
+                <div>
+                    <p class="my-3">
+                        <label class="subtitle">Last Name</label>
+                    </p>
+                    <input th:field="*{lastName}" class="input" type="text" placeholder="Doe"/>
+                    <p th:each="error : ${#fields.errors('lastName')}" class="has-text-danger"
+                       th:text="${error}">Validation error</p>
+                </div>
+                <div>
+                    <p class="my-3">
+                        <label class="subtitle">Address</label>
+                    </p>
+                    <input th:field="*{address}" class="input" type="text" placeholder="Address"/>
+                    <p th:each="error : ${#fields.errors('address')}" class="has-text-danger"
+                       th:text="${error}">Validation error</p>
+                </div>
+                <div class="field">
+                    <p class="my-3">
+                        <label class="subtitle">Email</label>
+                    </p>
+                    <p class="control has-icons-left has-icons-right">
+                        <input class="input" type="email" placeholder="Email" th:field="*{email}">
+                        <span class="icon is-small is-left">
+                          <i class="fas fa-at"></i>
+                        </span>
+                        <span class="icon is-small is-right">
+                          <i class="fas fa-check"></i>
+                        </span>
+                    <p th:each="error : ${#fields.errors('email')}" class="has-text-danger"
+                       th:text="${error}">Validation error</p>
+                </div>
+                <div class="field">
+                    <p class="my-3">
+                        <label class="subtitle">Password</label>
+                    </p>
+                    <p class="control has-icons-left has-icons-right">
+                        <input class="input" type="password" placeholder="Password" th:field="*{textPassword}">
+                        <span class="icon is-small is-left">
+                          <i class="fas fa-key"></i>
+                        </span>
+                    <p th:each="error : ${#fields.errors('textPassword')}" class="has-text-danger"
+                       th:text="${error}">Validation error</p>
+                </div>
+                <button type="submit" class="button is-primary my-3">Register</button>
+            </form>
+        </div>
+    </div>
+</div>
+<footer th:replace="fragments/general.html :: footer"></footer>
+</body>
+
+</html>

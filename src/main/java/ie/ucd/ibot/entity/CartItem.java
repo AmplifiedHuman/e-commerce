@@ -36,11 +36,10 @@ public class CartItem implements Serializable {
         }
     }
 
-    public int decrementQuantity(int n) {
+    public void decrementQuantity(int n) {
         if (quantity -n >= 0) {
             quantity -= n;
         }
-        return quantity;
     }
 
     public int getQuantity() {

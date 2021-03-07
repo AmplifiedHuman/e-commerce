@@ -1,11 +1,11 @@
 package ie.ucd.ibot.controller;
 
-import ie.ucd.ibot.entity.Cart;
-import ie.ucd.ibot.entity.CartItem;
-import ie.ucd.ibot.entity.Product;
+import ie.ucd.ibot.entity.*;
+import ie.ucd.ibot.service.CartService;
 import ie.ucd.ibot.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,56 +22,59 @@ public class CartController {
 
     private final ProductService productService;
 
+    private final CartService cartService;
+
     @Autowired
-    public CartController(Cart cart, ProductService productService) {
+    public CartController(Cart cart, ProductService productService, CartService cartService) {
+        this.cartService = cartService;
         cart.setCartItems(new ArrayList<>());
         this.cart = cart;
         this.productService = productService;
     }
 
     @GetMapping("/")
-    public String showCart(Model model) {
-        model.addAttribute("cart", cart);
+    public String showCart(Model model, @AuthenticationPrincipal User user) {
+        if (user == null) {
+            model.addAttribute("cart", cart);
+        } else {
+            model.addAttribute("cart", cartService.getCartByUserId(user.getId()));
+        }
         return "cart";
     }
 
     @ResponseBody
     @GetMapping("/total")
-    public String getTotal() {
+    public String getTotal(@AuthenticationPrincipal User user) {
         Numbers numbers = new Numbers(Locale.US);
-        return numbers.formatCurrency(cart.getTotal());
+        return numbers.formatCurrency(user == null ? cart.getTotal() :
+                cartService.getCartByUserId(user.getId()).getTotal());
     }
 
     @ResponseBody
     @PostMapping("/add")
-    public Map<String, ?> addItem(@RequestParam long productID, @RequestParam int quantity) {
-        Optional<Product> product = productService.findByID(productID);
-        CartItem item = cart.getCartItem(productID);
-        int cartItemCount = item == null ? 0 : item.getQuantity();
-        if (product.isPresent() && product.get().getQuantity() >= quantity + cartItemCount) {
-            Product p = product.get();
-            if (item == null) {
-                item = new CartItem();
-                item.setProduct(p);
-                item.setQuantity(quantity);
-                cart.addItem(item);
-            } else {
-                item.incrementQuantity(quantity);
-            }
+    public Map<String, ?> addItem(@RequestParam Long productID, @RequestParam Integer quantity,
+                                  @AuthenticationPrincipal User user) {
+        CartItem item;
+        // session cart
+        if (user == null) {
+            item = cartService.addSessionCartItem(productID, quantity, cart);
+        } else {
+            item = cartService.addCartItem(user.getId(), productID, quantity);
         }
-        assert item != null;
         return getStringMap(item);
     }
 
     @ResponseBody
     @PostMapping("/remove")
-    public Map<String, ?> removeItem(@RequestParam long productID, @RequestParam int quantity) {
-        Optional<Product> product = productService.findByID(productID);
-        CartItem item = cart.getCartItem(productID);
-        if (product.isPresent() && item != null && item.getQuantity() - quantity >= 1) {
-            item.decrementQuantity(quantity);
+    public Map<String, ?> removeItem(@RequestParam Long productID, @RequestParam Integer quantity,
+                                     @AuthenticationPrincipal User user) {
+        CartItem item;
+        // session cart
+        if (user == null) {
+            item = cartService.removeSessionCartItem(productID, quantity, cart);
+        } else {
+            item = cartService.removeCartItem(user.getId(), productID, quantity);
         }
-        assert item != null;
         return getStringMap(item);
     }
 
@@ -85,12 +88,18 @@ public class CartController {
 
     @ResponseBody
     @PostMapping("/delete")
-    public String deleteItem(@RequestParam long productID) {
-        Optional<Product> product = productService.findByID(productID);
-        if (product.isPresent()) {
-            cart.removeCartItem(productID);
-            return "true";
+    public Result deleteItem(@AuthenticationPrincipal User user, @RequestParam Long productID) {
+        try {
+            // session cart
+            if (user == null) {
+                cartService.deleteSessionCartItem(cart, productID);
+            } else {
+                // db cart
+                cartService.deleteCartItem(user.getId(), productID);
+            }
+            return new Result(Collections.singletonList("true"), true);
+        } catch (RuntimeException e) {
+            return new Result(Collections.singletonList("false"), false);
         }
-        return "false";
     }
 }
