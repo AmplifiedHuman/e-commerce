@@ -15,6 +15,7 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 @Getter
 @Builder
@@ -54,8 +55,11 @@ public class User implements UserDetails, Serializable {
     @NotEmpty(message = "Address cannot be empty.")
     private String address;
 
-    @OneToOne(cascade=CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     private Cart cart;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<CustomerOrder> customerOrders;
 
     @Builder.Default
     private UserRole userRole = UserRole.ROLE_USER;
@@ -142,8 +146,20 @@ public class User implements UserDetails, Serializable {
         this.locked = locked;
     }
 
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
+
     public void setCart(Cart cart) {
         cart.setUser(this);
         this.cart = cart;
+    }
+
+    public List<CustomerOrder> getCustomerOrders() {
+        return customerOrders;
+    }
+
+    public void setCustomerOrders(List<CustomerOrder> customerOrders) {
+        this.customerOrders = customerOrders;
     }
 }

@@ -41,8 +41,11 @@ public class Product implements Serializable {
     @Column
     private double discountRate;
 
-    @OneToMany(mappedBy = "product", cascade=CascadeType.ALL)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private Set<CartItem> items;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private Set<OrderItem> orderItems;
 
     public Long getId() {
         return id;
@@ -112,7 +115,6 @@ public class Product implements Serializable {
         isHidden = hidden;
     }
 
-
     public double getDiscountRate() {
         return discountRate;
     }
@@ -137,8 +139,27 @@ public class Product implements Serializable {
         this.items = items;
     }
 
+    public Set<OrderItem> getOrderItems() {
+        return orderItems;
+    }
+
+    public void setOrderItems(Set<OrderItem> orderItems) {
+        this.orderItems = orderItems;
+    }
+
     public void addItem(CartItem item) {
         items.add(item);
         item.setProduct(this);
+    }
+
+    public void addOrderItem(OrderItem item) {
+        orderItems.add(item);
+        item.setProduct(this);
+    }
+
+    public void decrementQuantity(int n) {
+        if (quantity - n >= 0) {
+            quantity -= n;
+        }
     }
 }

@@ -10,7 +10,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -33,6 +35,29 @@ public class CartService {
         }
         cartItemRepository.delete(item);
         cartItemRepository.flush();
+    }
+
+    @Transactional
+    public boolean isCartCurrentlyValid(Cart cart) {
+        for (CartItem item : cart.getCartItems()) {
+            Product p = item.getProduct();
+            if (item.getQuantity() > p.getQuantity() || p.isHidden()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Transactional
+    public void removeInvalidItems(Cart cart) {
+        Set<CartItem> removedItems = new HashSet<>();
+        for (CartItem item : cart.getCartItems()) {
+            Product p = item.getProduct();
+            if (item.getQuantity() > p.getQuantity() || p.isHidden()) {
+                removedItems.add(item);
+            }
+        }
+        cart.getCartItems().removeAll(removedItems);
     }
 
     @Transactional

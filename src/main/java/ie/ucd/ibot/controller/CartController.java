@@ -1,8 +1,12 @@
 package ie.ucd.ibot.controller;
 
-import ie.ucd.ibot.entity.*;
+import ie.ucd.ibot.entity.Cart;
+import ie.ucd.ibot.entity.CartItem;
+import ie.ucd.ibot.entity.Result;
+import ie.ucd.ibot.entity.User;
 import ie.ucd.ibot.service.CartService;
 import ie.ucd.ibot.service.ProductService;
+import ie.ucd.ibot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -24,12 +28,15 @@ public class CartController {
 
     private final CartService cartService;
 
+    private final UserService userService;
+
     @Autowired
-    public CartController(Cart cart, ProductService productService, CartService cartService) {
+    public CartController(Cart cart, ProductService productService, CartService cartService, UserService userService) {
         this.cartService = cartService;
         cart.setCartItems(new ArrayList<>());
         this.cart = cart;
         this.productService = productService;
+        this.userService = userService;
     }
 
     @GetMapping("/")
@@ -37,6 +44,7 @@ public class CartController {
         if (user == null) {
             model.addAttribute("cart", cart);
         } else {
+            // fetch latest cart from db
             model.addAttribute("cart", cartService.getCartByUserId(user.getId()));
         }
         return "cart";

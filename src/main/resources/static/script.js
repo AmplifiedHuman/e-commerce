@@ -13,6 +13,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+// alert button
+document.addEventListener('DOMContentLoaded', () => {
+    (document.querySelectorAll('.notification .delete') || []).forEach(($delete) => {
+        const $notification = $delete.parentNode;
+        $delete.addEventListener('click', () => {
+            $notification.classList.add("is-hidden");
+        });
+    });
+});
+
 // Search
 const search = () => {
     const searchBox = document.querySelector("#search-input");
@@ -53,34 +63,36 @@ const editCart = (productID, quantity, isAdd, updateRow, button) => {
     })
 }
 
-const deleteFromCart = (productID, button) => {
+const deleteFromCart = async (productID, button) => {
     const baseURL = window.location.origin;
     let data = new URLSearchParams();
     data.append('productID', productID);
-    fetch(baseURL + "/cart/delete", {
+    const response = await fetch(baseURL + "/cart/delete", {
         method: 'POST',
         body: data,
-    }).then(r => r.json())
-        .then(result => {
-            console.log(result);
-            if (result.success) {
-                updateTotal(true);
-                button.closest("tr").remove();
-            }
-        });
-}
-
-const updateTotal = (updateCartPrice) => {
-    const baseURL = window.location.origin;
-    fetch(baseURL + "/cart/total").then(r => r.text()).then(result => {
-        const total = document.querySelector("#cart-total-amount");
-        total.textContent = result;
-        if (updateCartPrice) {
-            const cartPrice = document.querySelector("#cart-total-price");
-            cartPrice.textContent = result;
-        }
     });
+    const responseJSON = await response.json();
+    if (responseJSON.success) {
+        const newTotal = await updateTotal(true);
+        button.closest("tr").remove();
+        if (newTotal === '$0.00') {
+            document.querySelector("#payment-form").remove();
+        }
+    }
 }
 
-updateTotal(false);
+const updateTotal = async (updateCartPrice) => {
+    const baseURL = window.location.origin;
+    const response = await fetch(baseURL + "/cart/total");
+    const responseText = await response.text();
+    let total = document.querySelector("#cart-total-amount");
+    total.textContent = responseText;
+    if (updateCartPrice) {
+        const cartPrice = document.querySelector("#cart-total-price");
+        cartPrice.textContent = responseText;
+    }
+    return total.textContent;
+}
+
+updateTotal(false).catch(e => console.log(e));
 search();

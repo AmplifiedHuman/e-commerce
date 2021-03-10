@@ -43,19 +43,4 @@ public class AuthenticationController {
     public String logoutPage() {
         return "redirect:/";
     }
-
-//    @PostMapping("/login")
-//    public String loginUser(@RequestParam String email, @RequestParam String password, BindingResult bindingResult,
-//                            HttpServletRequest request) {
-//        if (bindingResult.hasErrors()) {
-//            return "register";
-//        }
-//        userService.signUp(user);
-//        try {
-//            request.login(user.getEmail(), user.getTextPassword());
-//        } catch (ServletException e) {
-//            e.printStackTrace();
-//        }
-//        return "user/secret";
-//    }
 }

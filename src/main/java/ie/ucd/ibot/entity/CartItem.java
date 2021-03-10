@@ -37,7 +37,7 @@ public class CartItem implements Serializable {
     }
 
     public void decrementQuantity(int n) {
-        if (quantity -n >= 0) {
+        if (quantity - n >= 0) {
             quantity -= n;
         }
     }

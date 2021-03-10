@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <meta charset="UTF-8">
@@ -7,7 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
     <link rel="stylesheet" th:href="@{/style.css}">
+    <script src="https://js.stripe.com/v3/" defer></script>
     <script th:src="@{/script.js}" defer></script>
+    <script th:src="@{/payment.js}" defer></script>
     <script src="https://kit.fontawesome.com/d29d7d4ce7.js" crossorigin="anonymous"></script>
     <title>Document</title>
 </head>
@@ -17,7 +19,7 @@
 <div class="main-container container my-6">
     <h1 class="title is-2 has-text-centered mb-6 is-capitalized"
         th:text="Cart"></h1>
-    <table class="table is-hoverable">
+    <table class="table is-hoverable is-fullwidth">
         <thead>
         <tr>
             <th>Product Name</th>
@@ -60,6 +62,23 @@
         </tr>
         </tbody>
     </table>
+    <form id='payment-form' sec:authorize="isAuthenticated()" th:if="${cart.getTotal() > 0}">
+        <label>
+            Card details
+        </label>
+        <div id="card-element" class="my-2"></div>
+        <button type="submit" class="button my-3 is-light" id="payment-button">Pay 💰</button>
+    </form>
+    <div class="notification is-light is-hidden is-danger" id="payment-warning-container" sec:authorize="isAuthenticated()">
+        <button class="delete"></button>
+        <div id="payment-warning-content"></div>
+    </div>
+    <div sec:authorize="isAuthenticated()">
+        <input type="hidden" th:value="${cart.getUser().getFullName()}"
+               id="user-full-name"/>
+        <input type="hidden" th:value="${cart.getUser().getEmail()}" id="user-email"/>
+        <input type="hidden" th:value="${cart.getUser().getAddress()}" id="user-address"/>
+    </div>
 </div>
 <footer th:replace="fragments/general.html :: footer"></footer>
 </body>

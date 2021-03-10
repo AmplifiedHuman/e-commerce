@@ -44,6 +44,10 @@ public class UserService implements UserDetailsService {
         return userRepository.findByEmail(email).isPresent();
     }
 
+    public User getUserById(Long id) {
+        return userRepository.getOne(id);
+    }
+
     @Transactional
     public void loadUserCart(User user, Cart sessionCart) {
         // new user replaces their cart with session cart to save previous progress
