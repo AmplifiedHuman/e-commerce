@@ -32,6 +32,11 @@ body {
     margin: 0 auto;
 }
 
+.product-page {
+    width: 90%;
+    margin: 0 auto;
+}
+
 .strike-through {
     text-decoration: line-through;
 }

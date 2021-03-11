@@ -6,7 +6,7 @@
 
 <div class="columns is-align-items-flex-end is-multiline is-centered" th:fragment="cards(productList)">
     <a th:each="product : ${productList}" th:include="fragments/cards.html :: card(${product})"
-       th:if="${!product.isHidden}" class="column container"></a>
+       th:if="${!product.isHidden}" class="column container" th:href="@{/product/{id}(id=${product.getId()})}"></a>
 </div>
 
 <a th:fragment="card(productInput)" href="#" th:with="product=${productInput}">
