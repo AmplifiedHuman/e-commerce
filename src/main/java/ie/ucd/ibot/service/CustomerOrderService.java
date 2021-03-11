@@ -57,6 +57,13 @@ public class CustomerOrderService {
         userRepository.save(user);
     }
 
+    @Transactional
+    public void updateOrder(Long id, OrderStatus orderStatus){
+        CustomerOrder customerOrder = customerOrderRepository.findById(id).get();
+        customerOrder.setStatus(orderStatus);
+        customerOrderRepository.save(customerOrder);
+    }
+
     public List<CustomerOrder> findCustomerOrderByStatus(OrderStatus orderStatus) {
         return customerOrderRepository.findCustomerOrdersByStatus(orderStatus);
     }

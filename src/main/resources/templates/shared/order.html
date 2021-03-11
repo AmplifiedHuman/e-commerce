@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="UTF-8">
@@ -51,7 +51,20 @@
     <h2 class="is-capitalized has-text-weight-bold">Shipping Address:</h2>
     <p th:text="${order.getShippingAddress()}" class="mb-2"></p>
     <h2 class="is-capitalized has-text-weight-bold">Status:</h2>
-    <p th:text="${order.getStatus()}" class="mb-2 has-text-success subtitle"></p>
+    <p th:text="${order.getStatus()}" class="mb-2 has-text-success subtitle" id="order-status"></p>
+    <div sec:authorize="hasAnyRole('ROLE_ADMIN')">
+        <div class="box has-text-centered pt-2">
+            <p class="title is-4 pt-2">Manage Order</p>
+            <div class="select is-normal">
+                <select id="new-order-status">
+                    <option th:each="status : ${T(ie.ucd.ibot.entity.OrderStatus).values()}"
+                            th:value="${status}" th:text="${status}" th:selected="(${order.getStatus()} == ${status})">
+                    </option>
+                </select>
+            </div>
+            <button class="button is-normal" th:attr="onclick=|updateOrder(${order.getId()})|">Update Order</button>
+        </div>
+    </div>
 </div>
 <footer th:replace="fragments/general.html :: footer"></footer>
 </body>
