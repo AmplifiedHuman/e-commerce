@@ -71,4 +71,12 @@ public class CustomerOrder implements Serializable, Comparable<CustomerOrder> {
     public int compareTo(CustomerOrder o) {
         return o.getCreatedDate().compareTo(createdDate);
     }
+
+    public OrderStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(OrderStatus status) {
+        this.status = status;
+    }
 }

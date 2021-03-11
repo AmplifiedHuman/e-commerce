@@ -122,3 +122,17 @@ function backButton() {
     window.history.back();
 }
 
+const updateOrder = async(id) => {
+    const baseURL = window.location.origin;
+    const statusSelect = document.getElementById('new-order-status');
+    const newOrderStatus = statusSelect[statusSelect.selectedIndex].value;
+    let data = new URLSearchParams();
+    data.append('id', id);
+    data.append('newOrderStatus', newOrderStatus);
+    await fetch(baseURL+"/admin/order/update", {
+        method: 'POST',
+        body: data,
+    });
+    const orderStatusField = document.querySelector("#order-status");
+    orderStatusField.textContent = newOrderStatus;
+}
