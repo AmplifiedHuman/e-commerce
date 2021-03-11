@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <link rel="stylesheet" th:href="@{/style.css}">
+    <script th:src="@{/script.js}" defer></script>
+    <script src="https://kit.fontawesome.com/d29d7d4ce7.js" crossorigin="anonymous"></script>
+    <title>Document</title>
+</head>
+<body>
+<header th:replace="fragments/general.html :: header"></header>
+<div class="main-container container my-6 edit-container">
+    <h1 class="title is-2 has-text-centered mb-6">
+        Edit Product</h1>
+    <div>
+        <form id='edit-form'>
+            <div class="field">
+                <p class="my-3">
+                    <label class="subtitle">Name</label>
+                </p>
+                <input class="input" type="text" th:value="${product.getName()}" id="product-name" required>
+            </div>
+            <div class="field">
+                <p class="my-3">
+                    <label class="subtitle">Description</label>
+                </p>
+                <textarea th:text="${product.getDescription()}" class="textarea" id="product-description"
+                          required></textarea>
+            </div>
+            <div class="field">
+                <p class="my-3">
+                    <label class="subtitle">Image URL</label>
+                </p>
+                <input class="input" type="text" th:value="${product.getImageURL()}" id="product-imageurl" required>
+            </div>
+            <div class="field">
+                <p class="my-3">
+                    <label class="subtitle">Category</label>
+                </p>
+                <input class="input" type="text" th:value="${product.getCategories()}" id="product-category"
+                       required>
+            </div>
+            <div class="field">
+                <p class="my-3">
+                    <label class="subtitle">Quantity</label>
+                </p>
+                <input class="input" type="text" th:value="${product.getQuantity()}" id="product-quantity" required>
+            </div>
+            <div class="field">
+                <p class="my-3">
+                    <label class="subtitle">Price</label>
+                </p>
+                <input class="input" type="text" th:value="${product.getPrice()}" id="product-price" required>
+            </div>
+            <div class="field">
+                <p class="my-3">
+                    <label class="subtitle">Discount Rate</label>
+                </p>
+                <input class="input" type="text" th:value="${product.getDiscountRate()}" id="product-discount"
+                       required>
+            </div>
+            <div class="field">
+                <p class="my-3">
+                    <label class="subtitle">Hidden</label>
+                </p>
+                <div class="control">
+                    <label class="radio">
+                        <input class="radio" type="radio" name="hidden" th:checked="${product.isHidden()}"
+                               required>
+                        Yes
+                    </label>
+                    <label class="radio">
+                        <input class="radio" type="radio" name="hidden" th:checked="${!product.isHidden()}"
+                               required>
+                        No
+                    </label>
+                </div>
+            </div>
+            <button type="submit" class="button my-3 is-light" id="payment-button">Update</button>
+        </form>
+    </div>
+</div>
+<footer th:replace="fragments/general.html :: footer"></footer>
+</body>
+</html>
