@@ -94,6 +94,27 @@ const updateTotal = async (updateCartPrice) => {
     return total.textContent;
 }
 
+// product page
+const plusButton = () => {
+    const quantityField = document.querySelector("#product-quantity");
+    const quantity = parseInt(quantityField.textContent);
+    quantityField.textContent = quantity + 1 + '';
+}
+
+const minusButton = () => {
+    const quantityField = document.querySelector("#product-quantity");
+    const quantity = parseInt(quantityField.textContent);
+    if (quantity > 1) {
+        quantityField.textContent = quantity - 1 + '';
+    }
+}
+
+const addToCart = (productID) => {
+    const quantityField = document.querySelector("#product-quantity");
+    const quantity = parseInt(quantityField.textContent);
+    editCart(productID, quantity, true, false, null);
+}
+
 updateTotal(false).catch(e => console.log(e));
 search();
 

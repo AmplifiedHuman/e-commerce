@@ -49,6 +49,10 @@ body {
     width: 500px;
 }
 
+.product-image {
+    max-width: 600px;
+}
+
 /* 404 page credits: https://codepen.io/saransh/pen/aezht*/
 svg {
     position: absolute;
