@@ -4,6 +4,7 @@ import ie.ucd.ibot.configuration.SecurityConfig;
 import ie.ucd.ibot.entity.Cart;
 import ie.ucd.ibot.entity.CartItem;
 import ie.ucd.ibot.entity.User;
+import ie.ucd.ibot.entity.UserRole;
 import ie.ucd.ibot.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -67,6 +68,7 @@ public class UserService implements UserDetailsService {
     public void signUp(User user) {
         final String encryptedPassword = securityConfig.getPasswordEncoder().encode(user.getTextPassword());
         user.setPassword(encryptedPassword);
+        user.setUserRole(UserRole.ROLE_USER);
         userRepository.save(user);
     }
 }

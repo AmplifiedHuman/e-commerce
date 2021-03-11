@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <meta charset="UTF-8">
@@ -14,9 +14,42 @@
 
 <body>
 <header th:replace="fragments/general.html :: header"></header>
-<div class="main-container container my-6">
-    <h1 class="title">There's nothing here :(</h1>
+<section class="hero is-primary" sec:authorize="isAuthenticated()">
+    <div class = "hero-body">
+        <p class ="title">
+            Welcome!
+        </p>
+        <p class = "subtitle" th:text="${user.firstName}">
+        </p>
+    </div>
+</section>
+<section class="hero has-background-danger-light">
+    <div class="hero-body">
+        <p class="title">
+            <span class="mr-5">Featured This Week</span>
+            <button class="button is-primary" onclick="window.location.href='/browse'">
+                Browse
+            </button>
+        </p>
+        <div class="subtitle" th:replace="fragments/cards.html :: cards(${featured})"></div>
+    </div>
+</section>
+<section class="hero has-background-warning-light">
+    <div class="hero-body">
+        <p class="title">
+            <span class="mr-5">Offers</span>
+            <button class="button is-primary" onclick="window.location.href='/browse'">
+                Browse
+            </button>
+        </p>
+        <div class="subtitle" th:replace="fragments/cards.html :: cards(${offers})"></div>
+    </div>
+</section>
+<div class="main-container container">
+
+
 </div>
+
 <footer th:replace="fragments/general.html :: footer"></footer>
 </body>
 
