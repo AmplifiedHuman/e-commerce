@@ -1,10 +1,13 @@
 package ie.ucd.ibot.controller;
 
 import ie.ucd.ibot.entity.Product;
+import ie.ucd.ibot.entity.User;
 import ie.ucd.ibot.service.ProductService;
+import ie.ucd.ibot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,14 +18,26 @@ import java.util.Optional;
 @Controller
 public class DefaultController {
     private final ProductService productService;
-
+    private final UserService userService;
     @Autowired
-    public DefaultController(ProductService productService) {
+    public DefaultController(ProductService productService, UserService userService) {
         this.productService = productService;
+        this.userService = userService;
     }
 
     @GetMapping("/")
-    public String index() {
+    public String index(Model model, @AuthenticationPrincipal User sessionUser) {
+        if(sessionUser != null){
+            User user = userService.getUserById(sessionUser.getId());
+            model.addAttribute("user", user);
+        }
+        Page<Product> featuredProducts;
+        Page<Product> offersProducts;
+        featuredProducts = productService.findByCategoryPaginated("ELECTRONICS", PageRequest.of(0, 4));
+        offersProducts = productService.findByCategoryPaginated("OFFERS", PageRequest.of(0, 4));
+        model.addAttribute("featured", featuredProducts.toList());
+        model.addAttribute("offers", offersProducts.toList());
+
         return "index";
     }
 
