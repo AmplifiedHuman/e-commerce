@@ -1,5 +1,6 @@
 package ie.ucd.ibot.service;
 
+import com.stripe.model.Order;
 import ie.ucd.ibot.entity.*;
 import ie.ucd.ibot.repository.CustomerOrderRepository;
 import ie.ucd.ibot.repository.OrderItemRepository;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -53,5 +55,9 @@ public class CustomerOrderService {
         order.setPaymentId(paymentId);
         user.getCustomerOrders().add(order);
         userRepository.save(user);
+    }
+
+    public List<CustomerOrder> findCustomerOrderByStatus(OrderStatus orderStatus) {
+        return customerOrderRepository.findCustomerOrdersByStatus(orderStatus);
     }
 }

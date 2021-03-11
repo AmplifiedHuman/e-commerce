@@ -96,4 +96,3 @@ const updateTotal = async (updateCartPrice) => {
 
 updateTotal(false).catch(e => console.log(e));
 search();
-

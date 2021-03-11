@@ -65,7 +65,13 @@
                         <a class="button is-light" th:href="@{/login}" sec:authorize="isAnonymous()">
                             Log in
                         </a>
-                        <a class="button is-light is-info" th:href="@{/user/orders}" sec:authorize="isAuthenticated()">
+                        <a class="button is-light is-info" th:href="@{/user/orders}" sec:authorize="hasAnyRole('ROLE_USER')">
+                            <span class="icon">
+                              <i class="fas fa-box-open"></i>
+                            </span>
+                            <span>Orders</span>
+                        </a>
+                        <a class="button is-light is-info" th:href="@{/admin/orders}" sec:authorize="hasAnyRole('ROLE_ADMIN')">
                             <span class="icon">
                               <i class="fas fa-box-open"></i>
                             </span>
