@@ -62,6 +62,7 @@ public class User implements UserDetails, Serializable {
     private List<CustomerOrder> customerOrders;
 
     @Builder.Default
+    @Enumerated(EnumType.STRING)
     private UserRole userRole = UserRole.ROLE_USER;
 
     @Builder.Default
