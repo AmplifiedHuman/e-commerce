@@ -11,6 +11,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Optional;
@@ -75,4 +76,11 @@ public class DefaultController {
         return "search";
     }
 
+    @GetMapping("/product/{id}")
+    public String product(Model model, @PathVariable int id) {
+        Optional<Product> product = productService.findByID(id);
+        if(product.isEmpty()) return "error";
+        model.addAttribute("product", product.get());
+        return "product";
+    }
 }

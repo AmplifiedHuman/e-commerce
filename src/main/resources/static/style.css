@@ -32,6 +32,11 @@ body {
     margin: 0 auto;
 }
 
+.product-page {
+    width: 90%;
+    margin: 0 auto;
+}
+
 .strike-through {
     text-decoration: line-through;
 }
@@ -42,6 +47,10 @@ body {
 
 .payment-container {
     width: 500px;
+}
+
+.product-image {
+    max-width: 600px;
 }
 
 /* 404 page credits: https://codepen.io/saransh/pen/aezht*/

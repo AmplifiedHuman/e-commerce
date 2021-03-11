@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <link rel="stylesheet" th:href="@{/style.css}">
+    <script th:src="@{/script.js}" defer></script>
+    <script src="https://kit.fontawesome.com/d29d7d4ce7.js" crossorigin="anonymous"></script>
+    <title>Document</title>
+</head>
+
+<body>
+<header th:replace="fragments/general.html :: header"></header>
+<div class="main-container container my-6">
+    <div class="columns is-align-items-flex-start is-multiline is-centered is-paddingless product-page">
+        <div class="column container">
+            <figure class="image is-square product-image">
+                <img th:src="${product.getImageURL()}" alt="Placeholder image" src="">
+            </figure>
+        </div>
+        <div class="column container">
+            <div class="buttons container are-small">
+                <button class="button is-link is-light is-rounded" th:each="category : ${product.categories}"
+                        th:text="${category.getName()}">Category
+                </button>
+            </div>
+            <div class="is-marginless">
+                <div class="is-flex is-left-content-space-around">
+                    <p class="title is-2" th:text="${product.getName()}"></p>
+                </div>
+            </div>
+            <div class="container is-left-content-center is-flex mt-3">
+                <p class="is-4 has-text-primary subtitle is-flex-shrink-0"
+                   th:text="${#numbers.formatCurrency(product.price)}"></p>
+                <p class="is-size-7 has-text-danger strike-through is-flex-shrink-0"
+                   th:text="${product.getDiscountRate == 0} ? '' :
+                               ${#numbers.formatCurrency(product.getOriginalPrice)}"></p>
+            </div>
+            <div class="is-flex">
+                <div class="is-flex is-align-items-center is-justify-center is-marginless is-narrow">
+                    <button class="icon is-small button is-black"
+                            th:attr="onclick=|minusButton()|">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <p class="has-text-centered mx-3" th:id="product-quantity">1</p>
+                    <button class="icon is-small button is-black"
+                            th:attr="onclick=|plusButton()|">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+                <div class="mx-3">
+                    <button class="button is-black is-rounded is-align-self-flex-end"
+                            th:attr="onclick=|addToCart(${product.id})|">Add To Cart
+                    </button>
+                </div>
+            </div>
+            <p class="is-6 has-text-justified pt-4" th:text="${product.getDescription()}"></p>
+        </div>
+    </div>
+    <div class="has-text-centered">
+        <button class="button is-black is-rounded" onclick="backButton()">Back</button>
+    </div>
+</div>
+<footer th:replace="fragments/general.html :: footer"></footer>
+</body>
+
+</html>
