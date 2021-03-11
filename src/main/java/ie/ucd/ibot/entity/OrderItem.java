@@ -25,4 +25,8 @@ public class OrderItem implements Serializable {
 
     @Column
     private double salePrice;
+
+    public double getPrice() {
+        return quantity * salePrice;
+    }
 }

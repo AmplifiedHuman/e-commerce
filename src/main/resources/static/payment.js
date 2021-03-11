@@ -40,8 +40,7 @@ const handleServerResponse = async (response) => {
             window.location.reload();
         }, 3000);
     } else {
-        resetPaymentButton();
-        console.log("success");
+        window.location.href = window.location.origin + '/user/orders/';
     }
 }
 
@@ -81,7 +80,8 @@ const setupPaymentForm = () => {
             });
             await stripePaymentMethodHandler(result);
         } catch (e) {
-            setPaymentWarningMessage("Cannot connect to the Stripe server. Please try again.");
+            console.log(e);
+            setPaymentWarningMessage("Please make sure all fields are field out correctly.");
         }
     });
 }

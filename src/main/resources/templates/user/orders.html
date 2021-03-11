@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <link rel="stylesheet" th:href="@{/style.css}">
+    <script th:src="@{/script.js}" defer></script>
+    <script src="https://kit.fontawesome.com/d29d7d4ce7.js" crossorigin="anonymous"></script>
+    <title>Document</title>
+</head>
+
+<body>
+<header th:replace="fragments/general.html :: header"></header>
+<div class="main-container container my-6">
+    <h1 class="title is-2 has-text-centered mb-6 is-capitalized"
+        th:text="Orders"></h1>
+    <table class="table is-hoverable is-fullwidth">
+        <thead>
+        <tr>
+            <th>Order ID</th>
+            <th class="has-text-centered">Date</th>
+            <th class="has-text-centered">Status</th>
+            <th class="has-text-centered">Total</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="order : ${orders}">
+            <td th:text="${'#' + order.getId()}"></td>
+            <td th:text="${#dates.format(order.getCreatedDate(), 'd-M-yyyy')}" class="has-text-centered"></td>
+            <td th:text="${order.getStatus().name()}" class="has-text-centered"></td>
+            <td th:text="${#numbers.formatCurrency(order.getTotal())}" class="has-text-centered"></td>
+            <td>
+                <a class="button is-small is-info is-rounded" th:href="@{/user/order/{id}(id=${order.getId()})}">
+                    View
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<footer th:replace="fragments/general.html :: footer"></footer>
+</body>
+
+</html>

@@ -8,24 +8,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
     <link rel="stylesheet" th:href="@{/style.css}">
+    <script src="https://js.stripe.com/v3/" defer></script>
     <script th:src="@{/script.js}" defer></script>
+    <script th:src="@{/payment.js}" defer></script>
     <script src="https://kit.fontawesome.com/d29d7d4ce7.js" crossorigin="anonymous"></script>
-    <script src="https://js.stripe.com/v3/"></script>
     <title>Document</title>
 </head>
 
 <body>
 <header th:replace="fragments/general.html :: header"></header>
-<div class="main-container container my-6 login-container">
-    <div class="container">
+<div class="main-container container my-6 payment-container">
+    <div>
         <h1 class="title is-2 has-text-centered mb-6">
             Checkout</h1>
         <div>
-            <button id="checkout-button">Checkout</button>
+            <h1 class="subtitle has-text-centered"
+                th:text="${'Total: ' + #numbers.formatCurrency(user.getCart().getTotal())}"></h1>
+            <form id='payment-form'>
+                <div class="field">
+                    <p class="my-3">
+                        <label class="subtitle">Full Name</label>
+                    </p>
+                    <input class="input" type="text" th:value="${user.getFullName()}" id="user-full-name" required>
+                </div>
+                <div class="field">
+                    <p class="my-3">
+                        <label class="subtitle">Email</label>
+                    </p>
+                    <p class="control has-icons-left has-icons-right">
+                        <input class="input" type="email" th:value="${user.email}" id="user-email" required>
+                        <span class="icon is-small is-left">
+                          <i class="fas fa-at"></i>
+                        </span>
+                        <span class="icon is-small is-right">
+                          <i class="fas fa-check"></i>
+                        </span>
+                </div>
+                <div class="field">
+                    <p class="my-3">
+                        <label class="subtitle">Shipping Address</label>
+                    </p>
+                    <input class="input" type="text" th:value="${user.address}" id="user-address" required>
+                </div>
+                <p class="my-3">
+                    <label class="subtitle">Card Details</label>
+                </p>
+                <div id="card-element" class="my-2"></div>
+                <button type="submit" class="button my-3 is-light" id="payment-button">Pay 💰</button>
+            </form>
+        </div>
+        <div class="notification is-light is-hidden is-danger" id="payment-warning-container">
+            <button class="delete"></button>
+            <div id="payment-warning-content"></div>
         </div>
     </div>
-    <footer th:replace="fragments/general.html :: footer"></footer>
 </div>
+<footer th:replace="fragments/general.html :: footer"></footer>
 </body>
 
 </html>

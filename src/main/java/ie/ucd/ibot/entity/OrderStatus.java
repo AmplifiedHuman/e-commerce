@@ -1,8 +1,8 @@
 package ie.ucd.ibot.entity;
 
 public enum OrderStatus {
-    RECEIVED,
-    REFUNDED,
-    SHIPPING,
+    NEW,
     SHIPPED,
+    CANCELLED,
+    DELIVERED,
 }

@@ -51,7 +51,7 @@ public class PaymentService {
             responseData.put("payment_intent_client_secret", intent.getClientSecret());
         } else if (intent.getStatus().equals("succeeded")) {
             responseData.put("success", true);
-            orderService.createCustomerOrder(user, intent.getId());
+            orderService.createCustomerOrder(user, intent.getId(), intent.getShipping().getAddress().getLine1());
         } else {
             responseData.put("error", "Invalid status");
         }
