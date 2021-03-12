@@ -15,31 +15,26 @@
 
 <body>
 <header th:replace="fragments/general.html :: header"></header>
-<div class="main-container container my-6">
-    <h1 class="title is-2 has-text-centered mb-6 is-capitalized"
+<div class="columns main-container container my-6 ml-2 contact-page">
+    <div class="column">
+        <h1 class="title is-2 has-text-centered mb-6 is-capitalized"
         th:text="Messages"></h1>
-    <table class="table is-hoverable is-fullwidth">
-        <thead>
-        <tr>
-            <th class="has-text-centered">Date Sent</th>
-            <th class="has-text-centered">Subject</th>
-            <th class="has-text-centered">Type</th>
-            <th class="has-text-centered">View</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="message : ${messages}">
-            <td th:text="${#dates.format(message.getCreatedDate(), 'd-M-yyyy')}" class="has-text-centered"></td>
-            <td th:text="${message.getSubject()}" class="has-text-centered"></td>
-            <td th:text="${message.getType().name()}" class="has-text-centered"></td>
-            <td><button th:attr="onclick=|viewMessage(${message.id})|">View</button></td>
-        </tr>
-        </tbody>
-    </table>
-    <a class="button is-light is-info" th:attr="onclick=|viewNewMessage(${user.getId()})|" sec:authorize="hasAnyRole('ROLE_USER')">
-        New Message
-    </a>
-    <div id="contact-view">
+        <div class="has-text-centered pb-2">
+            <a class="button is-light is-info" th:attr="onclick=|viewNewMessage(${user.getId()})|" sec:authorize="hasAnyRole('ROLE_USER')">
+                New Message
+            </a>
+        </div>
+        <table class="table is-hoverable is-fullwidth messages">
+            <tbody>
+                <tr th:each="message : ${messages}" th:attr="onclick=|viewMessage(${message.id})|">
+                    <td th:text="${#dates.format(message.getCreatedDate(), 'd-M-yyyy')}" class="has-text-centered"></td>
+                    <td th:text="${message.getSubject()}" class="has-text-centered"></td>
+                    <td th:text="${message.getType().name()}" class="has-text-centered"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="column" id="contact-view">
 
     </div>
 </div>

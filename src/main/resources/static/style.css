@@ -171,3 +171,13 @@ svg {
     }
 }
 
+.messages tr{
+    line-height: 3rem;
+    background: #f1f1f1;
+    border: 1px solid lightgrey;
+}
+
+.contact-page {
+    width: 90%;
+}
+

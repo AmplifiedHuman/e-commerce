@@ -36,10 +36,12 @@ public class MessageService {
     }
 
     @Transactional
-    public void updateMessage(Long id, MessageType messageType) {
+    public void updateMessage(Long id, String messageContent, String Subject, MessageType messageType) {
         Optional<Message> message = messageRepository.findById(id);
         if (message.isPresent()) {
             Message newMessage = message.get();
+            newMessage.setSubject(Subject);
+            newMessage.setMessageContent(messageContent);
             newMessage.setType(messageType);
             messageRepository.save(newMessage);
         }

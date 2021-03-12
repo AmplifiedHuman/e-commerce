@@ -15,27 +15,20 @@
 
 <body>
 <header th:replace="fragments/general.html :: header"></header>
-<div class="main-container container my-6">
+<div class="columns main-container container my-6 ml-2 contact-page">
+    <div class="column">
     <h1 class="title is-2 has-text-centered mb-6 is-capitalized">Messages</h1>
-    <table class="table is-hoverable is-fullwidth">
-        <thead>
-        <tr>
-            <th class="has-text-centered">Date Sent</th>
-            <th class="has-text-centered">Subject</th>
-            <th class="has-text-centered">Type</th>
-            <th class="has-text-centered">View</th>
-        </tr>
-        </thead>
+    <table class="table is-hoverable is-fullwidth messages">
         <tbody>
-        <tr th:each="message : ${messages}">
+        <tr th:each="message : ${messages}" th:attr="onclick=|viewMessageAdmin(${message.id})|">
             <td th:text="${#dates.format(message.getCreatedDate(), 'd-M-yyyy')}" class="has-text-centered"></td>
             <td th:text="${message.getSubject()}" class="has-text-centered"></td>
             <td th:text="${message.getType().name()}" class="has-text-centered"></td>
-            <td><button th:attr="onclick=|viewMessageAdmin(${message.id})|">View</button></td>
         </tr>
         </tbody>
     </table>
-    <div id="contact-view">
+    </div>
+    <div class="column" id="contact-view">
 
     </div>
 </div>

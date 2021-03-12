@@ -178,21 +178,16 @@ const sendMessage = async(id) => {
         messageType = "NEW";
         subject = subjectSelect[subjectSelect.selectedIndex].value;
     }   else {
-        messageType = "ADMIN";
+        messageType = "ANSWERED";
         subject = subjectSelect.textContent;
     }
     const messageContent = document.getElementById('messageContent').value;
-    if(document.getElementById('messageType') === null){
-        messageType = "NEW";
-    }   else {
-        messageType = "ADMIN";
-    }
     let data = new URLSearchParams();
     data.append('id', id);
     data.append('subject', subject);
     data.append('messageContent', messageContent);
     data.append('messageType', messageType);
-    if(messageType === "ADMIN"){
+    if(messageType === "ANSWERED"){
         const messageId = document.getElementById('messageId').textContent;
         data.append('messageId', messageId);
         await fetch(baseURL+"/admin/contact/add", {
