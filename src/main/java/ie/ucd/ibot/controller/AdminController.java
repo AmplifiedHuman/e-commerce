@@ -108,7 +108,11 @@ public class AdminController {
     }
 
     @PostMapping("/add")
-    public String addProducts(@ModelAttribute("newProduct") Product newProduct){
+    public String addProducts(Model model, @ModelAttribute("newProduct") @Valid Product newProduct, BindingResult bindingResult){
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("categories", categoryRepository.findAll());
+            return "admin/add";
+        }
         productService.updateProduct(newProduct);
         return "redirect:/browse";
     }

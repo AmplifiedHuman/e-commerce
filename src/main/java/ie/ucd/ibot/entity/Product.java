@@ -27,18 +27,17 @@ public class Product implements Serializable {
     private String description;
 
     @Column(length = 300)
-    @NotEmpty(message = "(ImageURL cannot be empty.")
     private String imageURL;
 
     @ManyToMany(fetch = FetchType.LAZY)
     private Set<Category> categories;
 
     @Column
-    @Positive(message = "(Quantity must be greater than 1)")
+    @Positive(message = "Quantity must be greater than 1")
     private int quantity;
 
     @Column
-    @Positive(message = "(Price must be greater than 1)")
+    @Positive(message = "Price must be greater than 1")
     private double price;
 
     @Column
