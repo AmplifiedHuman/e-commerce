@@ -46,7 +46,7 @@ public class DefaultController {
     public String browse(Model model, @RequestParam("page") Optional<Integer> page,
                          @RequestParam("size") Optional<Integer> size, Optional<String> category) {
         int currentPage = page.orElse(1);
-        int pageSize = size.orElse(5);
+        int pageSize = size.orElse(7);
         Page<Product> productPage;
         if (category.isPresent() && !category.get().isEmpty()) {
             productPage = productService.findByCategoryPaginated(category.get(),
