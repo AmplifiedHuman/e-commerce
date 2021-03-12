@@ -5,8 +5,6 @@ import ie.ucd.ibot.entity.CartItem;
 import ie.ucd.ibot.entity.Result;
 import ie.ucd.ibot.entity.User;
 import ie.ucd.ibot.service.CartService;
-import ie.ucd.ibot.service.ProductService;
-import ie.ucd.ibot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -24,19 +22,13 @@ public class CartController {
 
     private final Cart cart;
 
-    private final ProductService productService;
-
     private final CartService cartService;
 
-    private final UserService userService;
-
     @Autowired
-    public CartController(Cart cart, ProductService productService, CartService cartService, UserService userService) {
+    public CartController(Cart cart, CartService cartService) {
         this.cartService = cartService;
         cart.setCartItems(new ArrayList<>());
         this.cart = cart;
-        this.productService = productService;
-        this.userService = userService;
     }
 
     @GetMapping("/")

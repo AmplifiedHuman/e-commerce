@@ -122,14 +122,14 @@ function backButton() {
     window.history.back();
 }
 
-const updateOrder = async(id) => {
+const updateOrder = async (id) => {
     const baseURL = window.location.origin;
     const statusSelect = document.getElementById('new-order-status');
     const newOrderStatus = statusSelect[statusSelect.selectedIndex].value;
     let data = new URLSearchParams();
     data.append('id', id);
     data.append('newOrderStatus', newOrderStatus);
-    await fetch(baseURL+"/admin/order/update", {
+    await fetch(baseURL + "/admin/order/update", {
         method: 'POST',
         body: data,
     });
@@ -137,12 +137,17 @@ const updateOrder = async(id) => {
     orderStatusField.textContent = newOrderStatus;
 }
 
-const removeProduct = async(id) => {
-    const baseURL = window.location.origin;
-    let data = new URLSearchParams();
-    data.append('id', id);
-    await fetch(baseURL+"/admin/delete", {
-        method: 'POST',
-        body: data,
-    });
+const removeProduct = async (id) => {
+    try {
+        const baseURL = window.location.origin;
+        let data = new URLSearchParams();
+        data.append('id', id);
+        await fetch(baseURL + "/admin/delete", {
+            method: 'POST',
+            body: data,
+        });
+        document.querySelector("#product-id-" + id).remove();
+    } catch (e) {
+        console.log(e);
+    }
 }

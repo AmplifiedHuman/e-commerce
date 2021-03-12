@@ -3,29 +3,16 @@ package ie.ucd.ibot.controller;
 import ie.ucd.ibot.entity.CustomerOrder;
 import ie.ucd.ibot.entity.OrderStatus;
 import ie.ucd.ibot.entity.Product;
-import ie.ucd.ibot.entity.User;
-import ie.ucd.ibot.entity.Product;
 import ie.ucd.ibot.repository.CategoryRepository;
-import ie.ucd.ibot.repository.ProductRepository;
 import ie.ucd.ibot.service.CustomerOrderService;
 import ie.ucd.ibot.service.ProductService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -71,7 +58,7 @@ public class AdminController {
 
     @PostMapping("/order/update")
     public String updateOrder(@RequestParam Long id, @RequestParam OrderStatus newOrderStatus) {
-        if(id == null || newOrderStatus == null) return "error";
+        if (id == null || newOrderStatus == null) return "error";
         Optional<CustomerOrder> customerOrder = customerOrderService.getOrderById(id);
         if (customerOrder.isEmpty()) {
             return "error";
@@ -81,15 +68,20 @@ public class AdminController {
     }
 
     @GetMapping("/edit/{id}")
-    public String viewEditProduct(Model model, @PathVariable Integer id){
-        Product product = productService.findByID(id).get();
+    public String viewEditProduct(Model model, @PathVariable Integer id) {
+        if (id == null) return "error";
+        Optional<Product> productOptional = productService.findByID(id);
+        if (productOptional.isEmpty()) {
+            return "error";
+        }
+        Product product = productOptional.get();
         model.addAttribute("categories", categoryRepository.findAll());
         model.addAttribute("product", product);
         return "admin/edit";
     }
 
-    @PostMapping("/edit/{id}")
-    public String updateProduct(Model model, @PathVariable Integer id, @ModelAttribute("product") @Valid Product product, BindingResult bindingResult){
+    @PostMapping("/edit")
+    public String updateProduct(Model model, @ModelAttribute("product") @Valid Product product, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("categories", categoryRepository.findAll());
             return "admin/edit";
@@ -98,27 +90,27 @@ public class AdminController {
         return "redirect:/browse";
     }
 
-    @PostMapping("/delete/{id}")
-    public void removeProduct(@RequestParam Long id){
-//        if(id == null) return "error";
+    @PostMapping("/delete")
+    public String removeProduct(@RequestParam Long id) {
+        if (id == null) return "error";
         Optional<Product> productOptional = productService.findByID(id);
-//        if (productOptional.isEmpty()) {
-//            return "error";
-//        }
+        if (productOptional.isEmpty()) {
+            return "error";
+        }
         Product product = productOptional.get();
         productService.removeProduct(product);
-//        return "redirect:/browse";
+        return "redirect:/browse";
     }
 
-    @GetMapping ("/add")
-    public String fillProducts(Model model){
+    @GetMapping("/add")
+    public String fillProducts(Model model) {
         model.addAttribute("newProduct", new Product());
         model.addAttribute("categories", categoryRepository.findAll());
         return "admin/add";
     }
 
     @PostMapping("/add")
-    public String addProducts(Model model, @ModelAttribute("newProduct") @Valid Product newProduct, BindingResult bindingResult){
+    public String addProducts(Model model, @ModelAttribute("newProduct") @Valid Product newProduct, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("categories", categoryRepository.findAll());
             return "admin/add";
@@ -126,5 +118,4 @@ public class AdminController {
         productService.updateProduct(newProduct);
         return "redirect:/browse";
     }
-
 }

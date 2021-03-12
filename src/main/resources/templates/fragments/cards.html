@@ -6,9 +6,11 @@
 
 <div class="columns is-align-items-flex-end is-multiline is-centered" th:fragment="cards(productList)">
     <div th:each="product : ${productList}" th:include="fragments/cards.html :: card(${product})"
-         sec:authorize="!hasAnyRole('ROLE_ADMIN')" th:if="${!product.isHidden}" class="column card-column"></div>
+         sec:authorize="!hasAnyRole('ROLE_ADMIN')" th:if="${!product.isHidden}" class="column card-column"
+         th:id="${'product-id-' + product.id}"></div>
     <div th:each="product : ${productList}" th:include="fragments/cards.html :: card(${product})"
-         sec:authorize="hasAnyRole('ROLE_ADMIN')" class="column card-column"></div>
+         sec:authorize="hasAnyRole('ROLE_ADMIN')" class="column card-column"
+         th:id="${'product-id-' + product.id}"></div>
 </div>
 
 <div th:fragment="card(productInput)" th:with="product=${productInput}">
@@ -39,45 +41,15 @@
                     </a>
                 </div>
                 <button class="button is-dark is-rounded is-align-self-flex-end is-fullwidth"
-                        th:attr="onclick=|editCart(${product.id},1,true,false,this)|" sec:authorize="!hasAnyRole('ROLE_ADMIN')" >Add To Cart
+                        th:attr="onclick=|editCart(${product.id},1,true,false,this)|"
+                        sec:authorize="!hasAnyRole('ROLE_ADMIN')">Add To Cart
                 </button>
                 <a class="button is-dark is-rounded is-align-self-flex-end is-fullwidth my-3"
                    th:href="@{/admin/edit/{id}(id=${product.getId()})}" sec:authorize="hasAnyRole('ROLE_ADMIN')">Edit
                 </a>
-            </div>
-        </div>
-    </a>
-</div>
-
-</div>
-</div>
-</a>
-            </div>
-            <div class="buttons container are-small is-flex is-justify-content-flex-start">
-                <a class="button is-link is-light is-rounded is-block" th:each="category : ${product.categories}"
-                        th:text="${category.getName()}" th:href="@{/browse(category=${category.getName()})}">Category
-                </a>
-            </div>
-            <button class="button is-dark is-rounded is-align-self-flex-end is-fullwidth"
-                    th:attr="onclick=|editCart(${product.id},1,true,false,this)|">Add To Cart
-            </button>
-            <a class="button is-dark is-rounded is-align-self-flex-end is-fullwidth my-3"
-                    th:href="@{/admin/edit/{id}(id=${product.getId()})}" sec:authorize="hasAnyRole('ROLE_ADMIN')">Edit
-            </a>
                 <button class="button is-danger is-rounded is-align-self-flex-end is-fullwidth my-3"
-                   th:attr="onclick=|removeProduct(${product.id})|" sec:authorize="hasAnyRole('ROLE_ADMIN')">Remove
-                </button>
-        </div>
-    </div>
-</a>
-</div>
-                <div class="buttons container are-small is-flex is-justify-content-flex-start">
-                    <a class="button is-link is-light is-rounded is-block" th:each="category : ${product.categories}"
-                       th:text="${category.getName()}" th:href="@{/browse(category=${category.getName()})}">Category
-                    </a>
-                </div>
-                <button class="button is-dark is-rounded is-align-self-flex-end is-fullwidth"
-                        th:attr="onclick=|editCart(${product.id},1,true,false,this)|">Add To Cart
+                        th:attr="onclick=|removeProduct(${product.id}, this)|" sec:authorize="hasAnyRole('ROLE_ADMIN')">
+                    Remove
                 </button>
             </div>
         </div>

@@ -1,8 +1,6 @@
 package ie.ucd.ibot.service;
 
 import ie.ucd.ibot.entity.Category;
-import ie.ucd.ibot.entity.CustomerOrder;
-import ie.ucd.ibot.entity.OrderStatus;
 import ie.ucd.ibot.entity.Product;
 import ie.ucd.ibot.repository.CategoryRepository;
 import ie.ucd.ibot.repository.ProductRepository;
@@ -13,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class ProductService {
@@ -47,12 +44,12 @@ public class ProductService {
     }
 
     @Transactional
-    public void updateProduct(Product product){
+    public void updateProduct(Product product) {
         productRepository.save(product);
     }
 
     @Transactional
-    public void removeProduct(Product product){
+    public void removeProduct(Product product) {
         productRepository.delete(product);
     }
 }
