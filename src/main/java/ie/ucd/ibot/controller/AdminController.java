@@ -56,19 +56,21 @@ public class AdminController {
         return "shared/order";
     }
 
-    @PostMapping("/order/update")
+    @PostMapping("/order")
+    @ResponseBody
     public String updateOrder(@RequestParam Long id, @RequestParam OrderStatus newOrderStatus) {
-        if (id == null || newOrderStatus == null) return "error";
-        Optional<CustomerOrder> customerOrder = customerOrderService.getOrderById(id);
-        if (customerOrder.isEmpty()) {
-            return "error";
-        }
+//        if (id == null || newOrderStatus == null) return "error";
+//        Optional<CustomerOrder> customerOrder = customerOrderService.getOrderById(id);
+//        if (customerOrder.isEmpty()) {
+//            return "error";
+//        }
         customerOrderService.updateOrder(id, newOrderStatus);
-        return "shared/order";
+//        return "shared/order";
+        return "success";
     }
 
     @GetMapping("/edit/{id}")
-    public String viewEditProduct(Model model, @PathVariable Integer id) {
+    public String viewEditProduct(Model model, @PathVariable Long id) {
         if (id == null) return "error";
         Optional<Product> productOptional = productService.findByID(id);
         if (productOptional.isEmpty()) {

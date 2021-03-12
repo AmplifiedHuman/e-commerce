@@ -129,7 +129,7 @@ const updateOrder = async (id) => {
     let data = new URLSearchParams();
     data.append('id', id);
     data.append('newOrderStatus', newOrderStatus);
-    await fetch(baseURL + "/admin/order/update", {
+    await fetch(baseURL + "/admin/order", {
         method: 'POST',
         body: data,
     });
