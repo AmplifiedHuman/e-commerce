@@ -70,7 +70,7 @@
                     <p class="my-3">
                         <label class="subtitle">Price</label>
                     </p>
-                    <input th:field="*{price}" class="input" type="number" step="any" id="add-product-price" required>
+                    <input th:field="*{originalPrice}" class="input" type="number" step="any" id="add-product-price" required>
                     <p th:each="error: ${#fields.errors('price')}" class="has-text-danger"
                        th:text="${error}">Validation error</p>
                 </div>
