@@ -156,6 +156,9 @@ function viewMessageAdmin(id) {
         url: "/admin/contact/"+id,
         success: function( result ) {
             $( "#contact-view" ).html(result);
+            if(document.getElementById('messageType').textContent === "ANSWERED"){
+                $("#reply-box").hide();
+            }
         }
     });
 }

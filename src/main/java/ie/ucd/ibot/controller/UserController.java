@@ -129,9 +129,11 @@ public class UserController {
     }
 
     @PostMapping("/contact/add")
-    public String addMessage(@RequestParam Long id, @RequestParam String subject,
+    public String addMessage(@AuthenticationPrincipal User sessionUser,
+                             @RequestParam Long id, @RequestParam String subject,
                               @RequestParam String messageContent, @RequestParam MessageType messageType) {
-        if(id == null || subject == null || messageContent == null || messageType == null){
+        if(id == null || subject == null || messageContent == null || messageType == null ||
+                !sessionUser.getId().equals(id)){
             return "error";
         }
         User user = userService.getUserById(id);

@@ -10,7 +10,7 @@
     <p th:text="${message.getSubject()}" class="mb-2"  id="subject"></p>
     <h2 class="is-capitalized has-text-weight-bold">Message:</h2>
     <textarea class="textarea is-info" th:text="${message.getMessageContent()}" readonly></textarea>
-    <div sec:authorize="hasAnyRole('ROLE_ADMIN')" class="mt-3">
+    <div sec:authorize="hasAnyRole('ROLE_ADMIN')" class="mt-3" id="reply-box">
         <div class="box has-text-centered pt-2">
             <p class="title is-4 pt-2">Answer Message</p>
             <div class="field">
