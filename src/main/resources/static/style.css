@@ -94,6 +94,10 @@ hr {
     background-color: white;
 }
 
+.add-container{
+    width: 1000px;
+}
+
 /* 404 page credits: https://codepen.io/saransh/pen/aezht*/
 svg {
     position: absolute;
@@ -168,3 +172,4 @@ svg {
         text-align: center;
     }
 }
+
