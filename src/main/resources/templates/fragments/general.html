@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head><title></title></head>
+<head>
+    <link rel="stylesheet" th:href="@{/style.css}">
+    <title></title></head>
 
 <body>
 <header th:fragment="header">
     <nav class="navbar p-2" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
-            <a class="navbar-item" th:href="@{/}">
+            <a class="navbar-item ibot-logo" th:href="@{/}">
                 <img src="https://cdn.cdnlogo.com/logos/a/1/amazon-icon.svg" alt="logo">
             </a>
-            <a class="navbar-item is-size-5" th:href="@{/}">Amazon</a>
+            <a class="navbar-item is-size-5" th:href="@{/}">IBOT</a>
             <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false"
                data-target="navbarBasicExample">
                 <span aria-hidden="true"></span>
@@ -34,6 +36,9 @@
                         </a>
                         <a class="navbar-item" th:href="@{/browse(category=BOOKS)}">
                             Books
+                        </a>
+                        <a class="navbar-item" th:href="@{/browse(category=FEATURED)}">
+                            Featured
                         </a>
                     </div>
                 </div>

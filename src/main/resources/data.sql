@@ -99,6 +99,8 @@ VALUES (1, 'OFFERS');
 INSERT INTO product_categories(products_id, categories_name)
 VALUES (1, 'ELECTRONICS');
 INSERT INTO product_categories(products_id, categories_name)
+VALUES (1, 'FEATURED');
+INSERT INTO product_categories(products_id, categories_name)
 VALUES (2, 'ELECTRONICS');
 INSERT INTO product_categories(products_id, categories_name)
 VALUES (3, 'ELECTRONICS');
@@ -114,6 +116,8 @@ INSERT INTO product_categories(products_id, categories_name)
 VALUES (6, 'ELECTRONICS');
 INSERT INTO product_categories(products_id, categories_name)
 VALUES (6, 'OFFERS');
+INSERT INTO product_categories(products_id, categories_name)
+VALUES (6, 'FEATURED');
 VALUES (7, 'ELECTRONICS');
 INSERT INTO product_categories(products_id, categories_name)
 VALUES (7, 'OFFERS');
@@ -143,6 +147,8 @@ VALUES (9, 'OFFERS');
 INSERT INTO product_categories(products_id, categories_name)
 VALUES (10, 'FOOD');
 INSERT INTO product_categories(products_id, categories_name)
+VALUES (10, 'FEATURED');
+INSERT INTO product_categories(products_id, categories_name)
 VALUES (11, 'FOOD');
 INSERT INTO product_categories(products_id, categories_name)
 VALUES (11, 'OFFERS');
@@ -156,6 +162,8 @@ INSERT INTO product_categories(products_id, categories_name)
 VALUES (14, 'OFFERS');
 INSERT INTO product_categories(products_id, categories_name)
 VALUES (14, 'FOOD');
+INSERT INTO product_categories(products_id, categories_name)
+VALUES (14, 'FEATURED');
 INSERT INTO product_categories(products_id, categories_name)
 VALUES (15, 'OFFERS');
 INSERT INTO product_categories(products_id, categories_name)
@@ -173,6 +181,8 @@ VALUES (17, 'OFFERS');
 INSERT INTO product_categories(products_id, categories_name)
 VALUES (18, 'BOOKS');
 INSERT INTO product_categories(products_id, categories_name)
+VALUES (18, 'FEATURED');
+INSERT INTO product_categories(products_id, categories_name)
 VALUES (19, 'BOOKS');
 INSERT INTO product_categories(products_id, categories_name)
 VALUES (20, 'BOOKS');
@@ -180,3 +190,5 @@ INSERT INTO product_categories(products_id, categories_name)
 VALUES (20, 'OFFERS');
 INSERT INTO product_categories(products_id, categories_name)
 VALUES (21, 'BOOKS');
+INSERT INTO product_categories(products_id, categories_name)
+VALUES (21, 'FEATURED');
