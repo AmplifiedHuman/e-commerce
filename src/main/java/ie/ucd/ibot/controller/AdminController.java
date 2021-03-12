@@ -3,13 +3,23 @@ package ie.ucd.ibot.controller;
 import ie.ucd.ibot.entity.CustomerOrder;
 import ie.ucd.ibot.entity.OrderStatus;
 import ie.ucd.ibot.entity.User;
+import ie.ucd.ibot.entity.Product;
+import ie.ucd.ibot.repository.CategoryRepository;
+import ie.ucd.ibot.repository.ProductRepository;
 import ie.ucd.ibot.service.CustomerOrderService;
+import ie.ucd.ibot.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +28,8 @@ import java.util.Optional;
 @RequestMapping("/admin")
 public class AdminController {
     private final CustomerOrderService customerOrderService;
+    private final ProductService productService;
+    private final CategoryRepository categoryRepository;
 
     @RequestMapping("/orders")
     public String viewOrders(Model model) {
@@ -61,4 +73,20 @@ public class AdminController {
         customerOrderService.updateOrder(id, newOrderStatus);
         return "shared/order";
     }
+
+    @GetMapping("/edit/{id}")
+    public String viewEditProduct(Model model, @PathVariable Integer id){
+        Product product = productService.findByID(id).get();
+        model.addAttribute("categories", categoryRepository.findAll());
+        model.addAttribute("product", product);
+        return "admin/edit";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String updateProduct(@PathVariable Integer id, @ModelAttribute("product") Product product){
+        productService.updateProduct(product);
+        return "redirect:/browse";
+    }
+
+
 }

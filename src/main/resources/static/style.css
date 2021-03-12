@@ -49,6 +49,10 @@ body {
     width: 500px;
 }
 
+.edit-container {
+    width: 1000px;
+}
+
 .product-image {
     max-width: 600px;
 }

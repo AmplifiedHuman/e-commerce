@@ -17,50 +17,55 @@
     <h1 class="title is-2 has-text-centered mb-6">
         Edit Product</h1>
     <div>
-        <form id='edit-form'>
+        <form id='edit-form' th:object="${product}" method="POST">
             <div class="field">
                 <p class="my-3">
                     <label class="subtitle">Name</label>
                 </p>
-                <input class="input" type="text" th:value="${product.getName()}" id="product-name" required>
+                <input class="input" type="text" th:field="*{name}" th:value="${product.getName()}" id="product-name" required>
             </div>
             <div class="field">
                 <p class="my-3">
                     <label class="subtitle">Description</label>
                 </p>
-                <textarea th:text="${product.getDescription()}" class="textarea" id="product-description"
+                <textarea th:text="${product.getDescription()}" th:field="*{description}" class="textarea" id="product-description"
                           required></textarea>
             </div>
             <div class="field">
                 <p class="my-3">
                     <label class="subtitle">Image URL</label>
                 </p>
-                <input class="input" type="text" th:value="${product.getImageURL()}" id="product-imageurl" required>
+                <input class="input" type="text" th:field="*{imageURL}" th:value="${product.getImageURL()}" id="product-imageurl" required>
             </div>
             <div class="field">
                 <p class="my-3">
                     <label class="subtitle">Category</label>
                 </p>
-                <input class="input" type="text" th:value="${product.getCategories()}" id="product-category"
-                       required>
+                <div class="select is-primary is-multiple">
+                    <select th:field="*{categories}" multiple>
+                        <option th:field="*{categories}" th:each="category : ${categories}"
+                                th:value="${category.getName()}" th:text="${category.getName()}") >
+                        </option>
+                    </select>
+                </div>
             </div>
             <div class="field">
                 <p class="my-3">
                     <label class="subtitle">Quantity</label>
                 </p>
-                <input class="input" type="text" th:value="${product.getQuantity()}" id="product-quantity" required>
+                <input class="input" type="text" th:field="*{quantity}" th:value="${product.getQuantity()}" id="product-quantity" required>
             </div>
             <div class="field">
                 <p class="my-3">
                     <label class="subtitle">Price</label>
                 </p>
-                <input class="input" type="text" th:value="${product.getPrice()}" id="product-price" required>
+                <input class="input" type="text" th:field="*{price}" th:value="${product.getPrice()}" id="product-price" required>
             </div>
             <div class="field">
                 <p class="my-3">
                     <label class="subtitle">Discount Rate</label>
                 </p>
-                <input class="input" type="text" th:value="${product.getDiscountRate()}" id="product-discount"
+                <input class="input" type="text" th:field="*{discountRate}" th:value="${product.getDiscountRate()}" id="product-discount"
                        required>
             </div>
             <div class="field">
@@ -69,18 +74,18 @@
                 </p>
                 <div class="control">
                     <label class="radio">
-                        <input class="radio" type="radio" name="hidden" th:checked="${product.isHidden()}"
+                        <input class="radio" type="radio" name="hidden" th:field="*{hidden}" th:checked="${product.isHidden()}" value="true"
                                required>
                         Yes
                     </label>
                     <label class="radio">
-                        <input class="radio" type="radio" name="hidden" th:checked="${!product.isHidden()}"
+                        <input class="radio" type="radio" name="hidden" th:field="*{hidden}" th:checked="${!product.isHidden()}" value="false"
                                required>
                         No
                     </label>
                 </div>
             </div>
-            <button type="submit" class="button my-3 is-light" id="payment-button">Update</button>
+            <button type="submit" class="button my-3 is-light" id="update-button">Update</button>
         </form>
     </div>
 </div>

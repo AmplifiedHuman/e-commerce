@@ -1,6 +1,8 @@
 package ie.ucd.ibot.service;
 
 import ie.ucd.ibot.entity.Category;
+import ie.ucd.ibot.entity.CustomerOrder;
+import ie.ucd.ibot.entity.OrderStatus;
 import ie.ucd.ibot.entity.Product;
 import ie.ucd.ibot.repository.CategoryRepository;
 import ie.ucd.ibot.repository.ProductRepository;
@@ -9,7 +11,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class ProductService {
@@ -40,5 +44,10 @@ public class ProductService {
 
     public Optional<Product> findByID(long id) {
         return productRepository.findById(id);
+    }
+
+    @Transactional
+    public void updateProduct(Product product){
+        productRepository.save(product);
     }
 }

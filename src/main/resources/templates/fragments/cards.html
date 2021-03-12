@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head><title></title></head>
 
 <body>
@@ -38,6 +38,9 @@
             <button class="button is-dark is-rounded is-align-self-flex-end is-fullwidth"
                     th:attr="onclick=|editCart(${product.id},1,true,false,this)|">Add To Cart
             </button>
+            <a class="button is-dark is-rounded is-align-self-flex-end is-fullwidth my-3"
+                    th:href="@{/admin/edit/{id}(id=${product.getId()})}" sec:authorize="hasAnyRole('ROLE_ADMIN')">Edit
+            </a>
         </div>
     </div>
 </a>
