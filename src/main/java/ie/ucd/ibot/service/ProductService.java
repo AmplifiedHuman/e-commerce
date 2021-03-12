@@ -35,8 +35,11 @@ public class ProductService {
         return Page.empty();
     }
 
-    public Page<Product> findByName(String searchString, Pageable pageable) {
-        return productRepository.findByNameContainingIgnoreCase(searchString, pageable);
+    public Page<Product> findByName(String searchString, Pageable pageable, boolean isAdmin) {
+        if (isAdmin) {
+            return productRepository.findByNameContainingIgnoreCase(searchString, pageable);
+        }
+        return productRepository.findByNameContainingIgnoreCaseAndIsHidden(searchString, false, pageable);
     }
 
     public Optional<Product> findByID(long id) {

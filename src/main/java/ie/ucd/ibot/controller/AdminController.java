@@ -3,6 +3,7 @@ package ie.ucd.ibot.controller;
 import ie.ucd.ibot.entity.CustomerOrder;
 import ie.ucd.ibot.entity.OrderStatus;
 import ie.ucd.ibot.entity.Product;
+import ie.ucd.ibot.entity.Result;
 import ie.ucd.ibot.repository.CategoryRepository;
 import ie.ucd.ibot.service.CustomerOrderService;
 import ie.ucd.ibot.service.ProductService;
@@ -13,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -58,15 +60,13 @@ public class AdminController {
 
     @PostMapping("/order")
     @ResponseBody
-    public String updateOrder(@RequestParam Long id, @RequestParam OrderStatus newOrderStatus) {
-//        if (id == null || newOrderStatus == null) return "error";
-//        Optional<CustomerOrder> customerOrder = customerOrderService.getOrderById(id);
-//        if (customerOrder.isEmpty()) {
-//            return "error";
-//        }
-        customerOrderService.updateOrder(id, newOrderStatus);
-//        return "shared/order";
-        return "success";
+    public Result updateOrder(@RequestParam Long id, @RequestParam OrderStatus newOrderStatus) {
+        try {
+            customerOrderService.updateOrder(id, newOrderStatus);
+            return new Result(Collections.singletonList("success"), true);
+        } catch (Exception e) {
+            return new Result(Collections.singletonList("failure"), false);
+        }
     }
 
     @GetMapping("/edit/{id}")
@@ -82,7 +82,7 @@ public class AdminController {
         return "admin/edit";
     }
 
-    @PostMapping("/edit")
+    @PostMapping("/edit/{id}")
     public String updateProduct(Model model, @ModelAttribute("product") @Valid Product product, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("categories", categoryRepository.findAll());
@@ -93,15 +93,20 @@ public class AdminController {
     }
 
     @PostMapping("/delete")
-    public String removeProduct(@RequestParam Long id) {
-        if (id == null) return "error";
-        Optional<Product> productOptional = productService.findByID(id);
-        if (productOptional.isEmpty()) {
-            return "error";
+    @ResponseBody
+    public Result removeProduct(@RequestParam Long id) {
+        try {
+            Optional<Product> productOptional = productService.findByID(id);
+            if (productOptional.isPresent()) {
+                Product product = productOptional.get();
+                productService.removeProduct(product);
+                return new Result(Collections.singletonList("success"), true);
+            } else {
+                return new Result(Collections.singletonList("failure"), false);
+            }
+        } catch (Exception e) {
+            return new Result(Collections.singletonList("failure"), false);
         }
-        Product product = productOptional.get();
-        productService.removeProduct(product);
-        return "redirect:/browse";
     }
 
     @GetMapping("/add")
@@ -112,7 +117,8 @@ public class AdminController {
     }
 
     @PostMapping("/add")
-    public String addProducts(Model model, @ModelAttribute("newProduct") @Valid Product newProduct, BindingResult bindingResult) {
+    public String addProducts(Model model, @ModelAttribute("newProduct") @Valid Product newProduct,
+                              BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("categories", categoryRepository.findAll());
             return "admin/add";

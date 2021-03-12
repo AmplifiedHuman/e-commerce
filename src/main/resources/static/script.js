@@ -86,12 +86,15 @@ const updateTotal = async (updateCartPrice) => {
     const response = await fetch(baseURL + "/cart/total");
     const responseText = await response.text();
     let total = document.querySelector("#cart-total-amount");
-    total.textContent = responseText;
     if (updateCartPrice) {
         const cartPrice = document.querySelector("#cart-total-price");
         cartPrice.textContent = responseText;
     }
-    return total.textContent;
+    if (total) {
+        total.textContent = responseText;
+        return total.textContent;
+    }
+    return null;
 }
 
 // product page
@@ -115,9 +118,6 @@ const addToCart = (productID) => {
     editCart(productID, quantity, true, false, null);
 }
 
-updateTotal(false).catch(e => console.log(e));
-search();
-
 function backButton() {
     window.history.back();
 }
@@ -129,25 +129,28 @@ const updateOrder = async (id) => {
     let data = new URLSearchParams();
     data.append('id', id);
     data.append('newOrderStatus', newOrderStatus);
-    await fetch(baseURL + "/admin/order", {
+    const response = await fetch(baseURL + "/admin/order", {
         method: 'POST',
         body: data,
     });
-    const orderStatusField = document.querySelector("#order-status");
-    orderStatusField.textContent = newOrderStatus;
+    if (response.isSuccess) {
+        const orderStatusField = document.querySelector("#order-status");
+        orderStatusField.textContent = newOrderStatus;
+    }
 }
 
 const removeProduct = async (id) => {
-    try {
-        const baseURL = window.location.origin;
-        let data = new URLSearchParams();
-        data.append('id', id);
-        await fetch(baseURL + "/admin/delete", {
-            method: 'POST',
-            body: data,
-        });
+    const baseURL = window.location.origin;
+    let data = new URLSearchParams();
+    data.append('id', id);
+    const response = await fetch(baseURL + "/admin/delete", {
+        method: 'POST',
+        body: data,
+    });
+    if (response.isSuccess) {
         document.querySelector("#product-id-" + id).remove();
-    } catch (e) {
-        console.log(e);
     }
 }
+
+updateTotal(false).catch(e => console.log(e));
+search();
