@@ -53,7 +53,7 @@
             <div class="navbar-end">
                 <div class="navbar-item">
                     <div class="buttons">
-                        <a class="button" th:href="@{/cart/}">
+                        <a class="button" th:href="@{/cart/}" sec:authorize="!hasAnyRole('ROLE_ADMIN')">
                             <span class="icon">
                               <i class="fas fa-shopping-basket"></i>
                             </span>

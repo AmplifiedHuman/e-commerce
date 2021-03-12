@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -83,7 +85,11 @@ public class AdminController {
     }
 
     @PostMapping("/edit/{id}")
-    public String updateProduct(@PathVariable Integer id, @ModelAttribute("product") Product product){
+    public String updateProduct(Model model, @PathVariable Integer id, @ModelAttribute("product") @Valid Product product, BindingResult bindingResult){
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("categories", categoryRepository.findAll());
+            return "admin/edit";
+        }
         productService.updateProduct(product);
         return "redirect:/browse";
     }

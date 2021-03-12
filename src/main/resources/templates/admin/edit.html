@@ -22,20 +22,23 @@
                 <p class="my-3">
                     <label class="subtitle">Name</label>
                 </p>
-                <input class="input" type="text" th:field="*{name}" th:value="${product.getName()}" id="product-name" required>
+                <input class="input" type="text" th:field="*{name}" th:value="${product.getName()}" id="product-name">
+                <p th:each="error: ${#fields.errors('name')}" class="has-text-danger"
+                   th:text="${error}">Validation error</p>
             </div>
             <div class="field">
                 <p class="my-3">
                     <label class="subtitle">Description</label>
                 </p>
-                <textarea th:text="${product.getDescription()}" th:field="*{description}" class="textarea" id="product-description"
-                          required></textarea>
+                <textarea th:text="${product.getDescription()}" th:field="*{description}" class="textarea" id="product-description"></textarea>
+                <p th:each="error: ${#fields.errors('description')}" class="has-text-danger"
+                   th:text="${error}">Validation error</p>
             </div>
             <div class="field">
                 <p class="my-3">
                     <label class="subtitle">Image URL</label>
                 </p>
-                <input class="input" type="text" th:field="*{imageURL}" th:value="${product.getImageURL()}" id="product-imageurl" required>
+                <input class="input" type="text" th:field="*{imageURL}" th:value="${product.getImageURL()}" id="product-imageurl">
             </div>
             <div class="field">
                 <p class="my-3">
@@ -53,20 +56,25 @@
                 <p class="my-3">
                     <label class="subtitle">Quantity</label>
                 </p>
-                <input class="input" type="text" th:field="*{quantity}" th:value="${product.getQuantity()}" id="product-quantity" required>
+                <input class="input" type="number" th:field="*{quantity}" th:value="${product.getQuantity()}" id="product-quantity">
+                <p th:each="error: ${#fields.errors('quantity')}" class="has-text-danger"
+                   th:text="${error}">Validation error</p>
             </div>
             <div class="field">
                 <p class="my-3">
                     <label class="subtitle">Price</label>
                 </p>
-                <input class="input" type="text" th:field="*{price}" th:value="${product.getPrice()}" id="product-price" required>
+                <input class="input" type="number" step="any" th:field="*{originalPrice}" th:value="${product.getOriginalPrice()}" id="product-price">
+                <p th:each="error: ${#fields.errors('price')}" class="has-text-danger"
+                   th:text="${error}">Validation error</p>
             </div>
             <div class="field">
                 <p class="my-3">
                     <label class="subtitle">Discount Rate</label>
                 </p>
-                <input class="input" type="text" th:field="*{discountRate}" th:value="${product.getDiscountRate()}" id="product-discount"
-                       required>
+                <input class="input" type="number" step="0.1" th:field="*{discountRate}" th:value="${product.getDiscountRate()}" id="product-discount">
+                <p th:each="error: ${#fields.errors('discountRate')}" class="has-text-danger"
+                   th:text="${error}">Validation error</p>
             </div>
             <div class="field">
                 <p class="my-3">
