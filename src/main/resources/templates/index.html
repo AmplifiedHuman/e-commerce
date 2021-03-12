@@ -62,7 +62,7 @@
         </div>
         <div class="subtitle" th:replace="fragments/cards.html :: cards(${featured})"></div>
         <div class="button-wrap is-flex is-justify-content-center">
-            <a th:href="@{/browse(category=ELECTRONICS)}" class="button is-rounded is-link raised is-light is-medium">
+            <a th:href="@{/browse(category=FEATURED)}" class="button is-rounded is-link raised is-light is-medium">
                 View More
             </a>
         </div>
@@ -74,7 +74,7 @@
             <h2 class="title is-2">Offers</h2>
             <hr>
         </div>
-        <div class="subtitle" th:replace="fragments/cards.html :: cards(${featured})"></div>
+        <div class="subtitle" th:replace="fragments/cards.html :: cards(${offers})"></div>
         <div class="button-wrap is-flex is-justify-content-center">
             <a th:href="@{/browse(category=OFFERS)}" class="button is-rounded is-link raised is-light is-medium">
                 View More
@@ -82,6 +82,7 @@
         </div>
     </div>
 </section>
+
 
 <footer th:replace="fragments/general.html :: footer"></footer>
 </body>

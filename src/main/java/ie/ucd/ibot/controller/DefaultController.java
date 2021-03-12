@@ -36,7 +36,7 @@ public class DefaultController {
         }
         Page<Product> featuredProducts;
         Page<Product> offersProducts;
-        featuredProducts = productService.findByCategoryPaginated("ELECTRONICS", PageRequest.of(0, 4));
+        featuredProducts = productService.findByCategoryPaginated("FEATURED", PageRequest.of(0, 4));
         offersProducts = productService.findByCategoryPaginated("OFFERS", PageRequest.of(0, 4));
         model.addAttribute("featured", featuredProducts.toList());
         model.addAttribute("offers", offersProducts.toList());
