@@ -15,87 +15,92 @@
 <body>
 <header th:replace="fragments/general.html :: header"></header>
 
-<div class="main-container container my-6 add-container">
-    <h1 class="title is-2 has-text-centered mb-6">
-        Add Product</h1>
-    <div>
-        <form id='edit-form' th:object="${newProduct}" method="POST">
-            <div class="field">
-                <p class="my-3">
-                    <label class="subtitle">Product Name</label>
-                </p>
-                <input class="input" th:field="*{name}" type="text" id="add-product-name">
-                <p th:each="error: ${#fields.errors('name')}" class="has-text-danger"
-                   th:text="${error}">Validation error</p>
-            </div>
-            <div class="field">
-                <p class="my-3">
-                    <label class="subtitle">Description</label>
-                </p>
-                <textarea th:field="*{description}" class="textarea" id="add-product-description"></textarea>
-                <p th:each="error: ${#fields.errors('description')}" class="has-text-danger"
-                   th:text="${error}">Validation error</p>
-            </div>
-            <div class="field">
-                <p class="my-3">
-                    <label th:field="*{imageURL}" class="subtitle">Image URL</label>
-                </p>
-                <input class="input" type="text" id="add-product-url">
-            </div>
-
-            <div class="field">
-                <p class="my-3">
-                    <label class="subtitle">Category</label>
-                </p>
-                <div class="select is-primary is-multiple">
-                    <select th:field="*{categories}" multiple>
-                        <option th:field="*{categories}" th:each="category : ${categories}" th:text="${category.getName()}" th:value="${category.getName()}">
-                        </option>
-                    </select>
+<div class="main-container my-6 is-flex is-justify-content-center">
+    <div class="edit-container mx-3">
+        <h1 class="title is-2 has-text-centered mb-6">
+            Add Product</h1>
+        <div>
+            <form id='edit-form' th:object="${newProduct}" method="POST">
+                <div class="field">
+                    <p class="my-3">
+                        <label class="subtitle">Product Name</label>
+                    </p>
+                    <input class="input" th:field="*{name}" type="text" id="add-product-name" required>
+                    <p th:each="error: ${#fields.errors('name')}" class="has-text-danger"
+                       th:text="${error}">Validation error</p>
                 </div>
-            </div>
-
-            <div class="field">
-                <p class="my-3">
-                    <label class="subtitle">Quantity</label>
-                </p>
-                <input th:field="*{quantity}" class="input" type="number" id="add-product-quantity" >
-                <p th:each="error: ${#fields.errors('quantity')}" class="has-text-danger"
-                   th:text="${error}">Validation error</p>
-            </div>
-            <div class="field">
-                <p class="my-3">
-                    <label class="subtitle">Price</label>
-                </p>
-                <input th:field="*{price}" class="input" type="number" step="any" id="add-product-price" >
-                <p th:each="error: ${#fields.errors('price')}" class="has-text-danger"
-                   th:text="${error}">Validation error</p>
-            </div>
-            <div class="field">
-                <p class="my-3">
-                    <label class="subtitle">Discount Rate</label>
-                </p>
-                <input th:field="*{discountRate}" class="input" type="number" step="0.1" id="add-product-discount" >
-                <p th:each="error: ${#fields.errors('discountRate')}" class="has-text-danger"
-                   th:text="${error}">Validation error</p>
-            </div>
-            <div class="field">
-                <p class="my-3">
-                    <label class="subtitle">Hidden</label>
-                </p>
-                <div class="control">
-                    <label class="radio">
-                        <input th:field="*{hidden}" class="radio" type="radio" name="hidden"  value="true">
-                        Yes
-                    </label>
-                    <label class="radio">
-                        <input class="radio" type="radio" name="hidden" th:field="*{hidden}" value="false">
-                        No
-                    </label>
+                <div class="field">
+                    <p class="my-3">
+                        <label class="subtitle">Description</label>
+                    </p>
+                    <textarea th:field="*{description}" class="textarea" id="add-product-description"
+                              required></textarea>
+                    <p th:each="error: ${#fields.errors('description')}" class="has-text-danger"
+                       th:text="${error}">Validation error</p>
                 </div>
-            </div>
-            <button type="submit" class="button my-3 is-primary" id="add-button">Add</button>
-        </form>
+                <div class="field">
+                    <p class="my-3">
+                        <label th:field="*{imageURL}" class="subtitle">Image URL</label>
+                    </p>
+                    <input class="input" type="text" id="add-product-url" required>
+                </div>
+
+                <div class="field">
+                    <p class="my-3">
+                        <label class="subtitle">Category</label>
+                    </p>
+                    <div class="select is-primary is-multiple">
+                        <select th:field="*{categories}" multiple>
+                            <option th:field="*{categories}" th:each="category : ${categories}"
+                                    th:text="${category.getName()}" th:value="${category.getName()}">
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <p class="my-3">
+                        <label class="subtitle">Quantity</label>
+                    </p>
+                    <input th:field="*{quantity}" class="input" type="number" id="add-product-quantity" required>
+                    <p th:each="error: ${#fields.errors('quantity')}" class="has-text-danger"
+                       th:text="${error}">Validation error</p>
+                </div>
+                <div class="field">
+                    <p class="my-3">
+                        <label class="subtitle">Price</label>
+                    </p>
+                    <input th:field="*{price}" class="input" type="number" step="any" id="add-product-price" required>
+                    <p th:each="error: ${#fields.errors('price')}" class="has-text-danger"
+                       th:text="${error}">Validation error</p>
+                </div>
+                <div class="field">
+                    <p class="my-3">
+                        <label class="subtitle">Discount Rate</label>
+                    </p>
+                    <input th:field="*{discountRate}" class="input" type="number" step="0.1" id="add-product-discount"
+                           required>
+                    <p th:each="error: ${#fields.errors('discountRate')}" class="has-text-danger"
+                       th:text="${error}">Validation error</p>
+                </div>
+                <div class="field">
+                    <p class="my-3">
+                        <label class="subtitle">Hidden</label>
+                    </p>
+                    <div class="control">
+                        <label class="radio">
+                            <input th:field="*{hidden}" class="radio" type="radio" name="hidden" value="true">
+                            Yes
+                        </label>
+                        <label class="radio">
+                            <input class="radio" type="radio" name="hidden" th:field="*{hidden}" value="false">
+                            No
+                        </label>
+                    </div>
+                </div>
+                <button type="submit" class="button my-3 is-light is-primary" id="add-button">Add</button>
+            </form>
+        </div>
     </div>
 </div>
 <footer th:replace="fragments/general.html :: footer"></footer>

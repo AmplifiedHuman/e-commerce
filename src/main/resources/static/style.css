@@ -53,8 +53,10 @@ body {
     width: 500px;
 }
 
-.edit-container {
-    width: 1000px;
+.edit-container, .add-container {
+    max-width: 1000px;
+    margin: 0;
+    flex-grow: 1;
 }
 
 .product-image {
@@ -92,10 +94,6 @@ hr {
 
 .waves {
     background-color: white;
-}
-
-.add-container{
-    width: 1000px;
 }
 
 /* 404 page credits: https://codepen.io/saransh/pen/aezht*/
