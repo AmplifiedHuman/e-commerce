@@ -1,7 +1,6 @@
 package ie.ucd.ibot.controller;
 
 import com.stripe.Stripe;
-import com.stripe.model.PaymentIntent;
 import ie.ucd.ibot.entity.ConfirmPaymentRequest;
 import ie.ucd.ibot.entity.CustomerOrder;
 import ie.ucd.ibot.entity.User;
@@ -40,13 +39,11 @@ public class UserController {
     @PostMapping("/pay")
     public Map<String, Object> processPayment(@RequestBody ConfirmPaymentRequest confirmPaymentRequest,
                                               @AuthenticationPrincipal User sessionUser, HttpServletResponse response) {
-        PaymentIntent intent = null;
         try {
             Map<String, Object> responseData = paymentService.handleUserPayment(confirmPaymentRequest, sessionUser.getId());
             handleResponse(response, responseData);
             return responseData;
         } catch (Exception e) {
-            e.printStackTrace();
             response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
             Map<String, Object> errorResponse = new HashMap<>();
             errorResponse.put("error", "Error, please contact support.");

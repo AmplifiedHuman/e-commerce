@@ -25,8 +25,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public String registerUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult,
-                               HttpServletRequest request) {
+    public String registerUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "register";
         }
