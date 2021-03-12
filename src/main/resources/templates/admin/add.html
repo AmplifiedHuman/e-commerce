@@ -49,7 +49,7 @@
                 </p>
                 <div class="select is-primary is-multiple">
                     <select th:field="*{categories}" multiple>
-                        <option th:field="*{categories}" th:each="category : ${categories}" th:text="${category.getName()}") th:value="${category.getName()}">
+                        <option th:field="*{categories}" th:each="category : ${categories}" th:text="${category.getName()}" th:value="${category.getName()}">
                         </option>
                     </select>
                 </div>
@@ -98,10 +98,7 @@
         </form>
     </div>
 </div>
-
-
 <footer th:replace="fragments/general.html :: footer"></footer>
-
 
 </body>
 </html>

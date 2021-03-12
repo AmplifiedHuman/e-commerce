@@ -98,7 +98,17 @@ public class AdminController {
         return "redirect:/browse";
     }
 
-
+    @PostMapping("/delete/{id}")
+    public void removeProduct(@RequestParam Long id){
+//        if(id == null) return "error";
+        Optional<Product> productOptional = productService.findByID(id);
+//        if (productOptional.isEmpty()) {
+//            return "error";
+//        }
+        Product product = productOptional.get();
+        productService.removeProduct(product);
+//        return "redirect:/browse";
+    }
 
     @GetMapping ("/add")
     public String fillProducts(Model model){

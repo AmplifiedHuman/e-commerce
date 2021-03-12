@@ -52,6 +52,36 @@
 </div>
 </div>
 </a>
+            </div>
+            <div class="buttons container are-small is-flex is-justify-content-flex-start">
+                <a class="button is-link is-light is-rounded is-block" th:each="category : ${product.categories}"
+                        th:text="${category.getName()}" th:href="@{/browse(category=${category.getName()})}">Category
+                </a>
+            </div>
+            <button class="button is-dark is-rounded is-align-self-flex-end is-fullwidth"
+                    th:attr="onclick=|editCart(${product.id},1,true,false,this)|">Add To Cart
+            </button>
+            <a class="button is-dark is-rounded is-align-self-flex-end is-fullwidth my-3"
+                    th:href="@{/admin/edit/{id}(id=${product.getId()})}" sec:authorize="hasAnyRole('ROLE_ADMIN')">Edit
+            </a>
+                <button class="button is-danger is-rounded is-align-self-flex-end is-fullwidth my-3"
+                   th:attr="onclick=|removeProduct(${product.id})|" sec:authorize="hasAnyRole('ROLE_ADMIN')">Remove
+                </button>
+        </div>
+    </div>
+</a>
+</div>
+                <div class="buttons container are-small is-flex is-justify-content-flex-start">
+                    <a class="button is-link is-light is-rounded is-block" th:each="category : ${product.categories}"
+                       th:text="${category.getName()}" th:href="@{/browse(category=${category.getName()})}">Category
+                    </a>
+                </div>
+                <button class="button is-dark is-rounded is-align-self-flex-end is-fullwidth"
+                        th:attr="onclick=|editCart(${product.id},1,true,false,this)|">Add To Cart
+                </button>
+            </div>
+        </div>
+    </a>
 </div>
 
 </body>

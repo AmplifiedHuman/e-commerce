@@ -136,3 +136,13 @@ const updateOrder = async(id) => {
     const orderStatusField = document.querySelector("#order-status");
     orderStatusField.textContent = newOrderStatus;
 }
+
+const removeProduct = async(id) => {
+    const baseURL = window.location.origin;
+    let data = new URLSearchParams();
+    data.append('id', id);
+    await fetch(baseURL+"/admin/delete", {
+        method: 'POST',
+        body: data,
+    });
+}

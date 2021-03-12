@@ -50,4 +50,9 @@ public class ProductService {
     public void updateProduct(Product product){
         productRepository.save(product);
     }
+
+    @Transactional
+    public void removeProduct(Product product){
+        productRepository.delete(product);
+    }
 }
