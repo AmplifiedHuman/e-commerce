@@ -130,6 +130,11 @@ INSERT INTO user(address, email, enabled, first_name, last_name, locked, passwor
 VALUES ('University College Dublin Belfield, Dublin 4, Ireland.', 'admin@gmail.com', true, 'Shop', 'Owner',
         false, '$2y$12$mLgWin7zUOASwe7ybRNAceoiv4ENXhyJXTb/MFtUT4fix0p2kEqAO', 'ROLE_ADMIN', NULL);
 
+
+INSERT INTO message (id, created_date, message_content, type, subject, user_id)
+VALUES ('1', '2020-12-01', 'Hello there how are you? please help me with my order!!!', 'NEW', 'Account Help', '1');
+
+
 /*Food category*/
 INSERT INTO product_categories(products_id, categories_name)
 VALUES (9, 'FOOD');

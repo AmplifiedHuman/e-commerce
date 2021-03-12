@@ -61,6 +61,9 @@ public class User implements UserDetails, Serializable {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<CustomerOrder> customerOrders;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Message> messages;
+
     @Builder.Default
     @Enumerated(EnumType.STRING)
     private UserRole userRole = UserRole.ROLE_USER;
@@ -162,5 +165,13 @@ public class User implements UserDetails, Serializable {
 
     public void setCustomerOrders(List<CustomerOrder> customerOrders) {
         this.customerOrders = customerOrders;
+    }
+
+    public List<Message> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(List<Message> messages) {
+        this.messages = messages;
     }
 }

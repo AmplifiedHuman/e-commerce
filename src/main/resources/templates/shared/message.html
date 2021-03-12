@@ -1,0 +1,23 @@
+<div class="main-container container my-6" xmlns:th="http://www.w3.org/1999/xhtml"
+     xmlns:sec="http://www.w3.org/1999/xhtml">
+    <h1 class="title is-2 has-text-centered mb-6 is-capitalized">View Message</h1>
+    <h2 class="is-capitalized has-text-weight-bold">Message #</h2>
+    <p th:text="${message.getId()}" class="mb-2"  id="messageId"></p>
+    <h2 class="is-capitalized has-text-weight-bold">Customer</h2>
+    <p th:text="${message.getUser().getFullName()}" class="mb-2"></p>
+    <h2 class="is-capitalized has-text-weight-bold">Subject</h2>
+    <p th:text="${message.getSubject()}" class="mb-2"  id="subject"></p>
+    <h2 class="is-capitalized has-text-weight-bold">Message:</h2>
+    <textarea class="textarea is-info" th:text="${message.getMessageContent()}" readonly></textarea>
+    <h2 class="is-capitalized has-text-weight-bold">Type:</h2>
+    <p th:text="${message.getType().name()}" class="mb-2 has-text-success subtitle"  id="messageType"></p>
+    <div sec:authorize="hasAnyRole('ROLE_ADMIN')">
+        <div class="box has-text-centered pt-2">
+            <p class="title is-4 pt-2">Answer Message</p>
+            <div class="field">
+                <textarea class="textarea" id="messageContent" placeholder="Your reply goes here..."></textarea>
+            </div>
+            <button class="button is-normal" th:attr="onclick=|sendMessage(${message.getUser().getId()})|">Send Reply</button>
+        </div>
+    </div>
+</div>

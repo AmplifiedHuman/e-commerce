@@ -1,15 +1,16 @@
 package ie.ucd.ibot.controller;
 
-import ie.ucd.ibot.entity.CustomerOrder;
-import ie.ucd.ibot.entity.OrderStatus;
-import ie.ucd.ibot.entity.User;
+import ie.ucd.ibot.entity.*;
 import ie.ucd.ibot.service.CustomerOrderService;
+import ie.ucd.ibot.service.MessageService;
+import ie.ucd.ibot.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +19,8 @@ import java.util.Optional;
 @RequestMapping("/admin")
 public class AdminController {
     private final CustomerOrderService customerOrderService;
+    private final MessageService messageService;
+    private final UserService userService;
 
     @RequestMapping("/orders")
     public String viewOrders(Model model) {
@@ -60,5 +63,41 @@ public class AdminController {
         }
         customerOrderService.updateOrder(id, newOrderStatus);
         return "shared/order";
+    }
+
+    @RequestMapping("/contact")
+    public String viewMessages(Model model) {
+        List<Message> messages = messageService.getAllMessages();
+
+        if (messages != null) {
+            Collections.sort(messages);
+            model.addAttribute("messages", messages);
+        }
+
+        return "admin/contact";
+    }
+
+    @GetMapping("/contact/{id}")
+    public String viewMessage(@PathVariable Long id, Model model) {
+        // only allow users to view their own order
+        Optional<Message> message = messageService.getMessageById(id);
+        if (message.isEmpty()) {
+            return "error";
+        }
+        model.addAttribute("message", message.get());
+        return "shared/message";
+    }
+
+    @PostMapping("/contact/add")
+    public String addMessage(@RequestParam Long id, @RequestParam String subject, @RequestParam String messageContent,
+                             @RequestParam MessageType messageType, @RequestParam Long messageId) {
+        if(id == null || subject == null || messageContent == null || messageType == null){
+            return "error";
+        }
+        User user = userService.getUserById(id);
+        messageService.getMessageById(messageId).get().setType(MessageType.ANSWERED);
+        messageContent += "\n\nCUSTOMER WROTE:\n" + messageService.getMessageById(messageId).get().getMessageContent();
+        messageService.createMessage(user, messageContent, subject, messageType);
+        return "admin/contact";
     }
 }

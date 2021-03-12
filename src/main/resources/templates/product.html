@@ -24,7 +24,7 @@
         <div class="column container">
             <div class="buttons container are-small">
                 <button class="button is-link is-light is-rounded" th:each="category : ${product.categories}"
-                        th:text="${category.getName()}">Category
+                        th:text="${category.getName()}" th:href="@{/browse(category=${category.getName()})}">Category
                 </button>
             </div>
             <div class="is-marginless">

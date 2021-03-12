@@ -42,7 +42,10 @@
                     Offers
                 </a>
 
-                <a class="navbar-item" th:href="@{#}">
+                <a class="navbar-item" th:href="@{/user/contact}" sec:authorize="hasAnyRole('ROLE_USER')">
+                    Contact
+                </a>
+                <a class="navbar-item" th:href="@{/admin/contact}" sec:authorize="hasAnyRole('ROLE_ADMIN')">
                     Contact
                 </a>
 

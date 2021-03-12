@@ -136,3 +136,69 @@ const updateOrder = async(id) => {
     const orderStatusField = document.querySelector("#order-status");
     orderStatusField.textContent = newOrderStatus;
 }
+
+function viewMessage(id) {
+    $.ajax({
+        url: "/user/contact/"+id,
+        success: function( result ) {
+            $( "#contact-view" ).html(result);
+        }
+    });
+}
+
+function viewMessageAdmin(id) {
+    $.ajax({
+        url: "/admin/contact/"+id,
+        success: function( result ) {
+            $( "#contact-view" ).html(result);
+        }
+    });
+}
+
+function viewNewMessage(id) {
+    $.ajax({
+        url: "/user/contactForm/"+id,
+        success: function( result ) {
+            $( "#contact-view" ).html(result);
+        }
+    });
+}
+
+const sendMessage = async(id) => {
+    const baseURL = window.location.origin;
+    const subjectSelect = document.getElementById('subject');
+    let subject = "";
+    let messageType = "";
+    if(document.getElementById('messageType') === null){
+        messageType = "NEW";
+        subject = subjectSelect[subjectSelect.selectedIndex].value;
+    }   else {
+        messageType = "ADMIN";
+        subject = subjectSelect.textContent;
+    }
+    const messageContent = document.getElementById('messageContent').value;
+    if(document.getElementById('messageType') === null){
+        messageType = "NEW";
+    }   else {
+        messageType = "ADMIN";
+    }
+    let data = new URLSearchParams();
+    data.append('id', id);
+    data.append('subject', subject);
+    data.append('messageContent', messageContent);
+    data.append('messageType', messageType);
+    if(messageType === "ADMIN"){
+        const messageId = document.getElementById('messageId').textContent;
+        data.append('messageId', messageId);
+        await fetch(baseURL+"/admin/contact/add", {
+            method: 'POST',
+            body: data,
+        });
+    } else{
+        await fetch(baseURL+"/user/contact/add", {
+            method: 'POST',
+            body: data,
+        });
+    }
+    location.reload();
+}

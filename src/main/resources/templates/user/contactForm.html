@@ -1,0 +1,37 @@
+<div class="box main-container container my-6 contact-container" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div>
+        <h1 class="title is-2 has-text-centered mb-6">
+            New Message</h1>
+        <div>
+                <div class="field">
+                    <p class="my-3">
+                        <label class="subtitle">Subject</label>
+                    </p>
+                    <div class="select is-normal">
+                        <select id="subject">
+                            <option value="Account Help">
+                                Account Help
+                            </option>
+                            <option value="General Question">
+                                General Question
+                            </option>
+                            <option value="Bug Report">
+                                Bug Report
+                            </option>
+                            <option th:each="order : ${user.getCustomerOrders()}"
+                                    th:value="'Regarding Order #' + ${order.getId()}" th:text="'Regarding Order #' + ${order.getId()}">
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="field">
+                    <p class="my-3">
+                        <label class="subtitle">Message</label>
+                    </p>
+                    <p class="control">
+                        <textarea class="textarea" id="messageContent" placeholder="Your message goes here..."></textarea>
+                </div>
+                <button class="button my-3 is-light" th:attr="onclick=|sendMessage(${user.getId()})|">Send Message</button>
+        </div>
+    </div>
+</div>
