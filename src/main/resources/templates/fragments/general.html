@@ -77,6 +77,12 @@
                             </span>
                             <span>Orders</span>
                         </a>
+                        <a class="button is-light is-info" th:href="@{/admin/add}" sec:authorize="hasAnyRole('ROLE_ADMIN')">
+                            <span class="icon">
+                              <i class="fas fa-box-open"></i>
+                            </span>
+                            <span>Add Product</span>
+                        </a>
                         <a class="button is-light" th:href="@{/logout}" sec:authorize="isAuthenticated()">
                             Sign out
                         </a>

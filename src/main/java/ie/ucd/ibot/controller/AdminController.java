@@ -2,6 +2,7 @@ package ie.ucd.ibot.controller;
 
 import ie.ucd.ibot.entity.CustomerOrder;
 import ie.ucd.ibot.entity.OrderStatus;
+import ie.ucd.ibot.entity.Product;
 import ie.ucd.ibot.entity.User;
 import ie.ucd.ibot.entity.Product;
 import ie.ucd.ibot.repository.CategoryRepository;
@@ -16,6 +17,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -94,5 +98,19 @@ public class AdminController {
         return "redirect:/browse";
     }
 
+
+
+    @GetMapping ("/add")
+    public String fillProducts(Model model){
+        model.addAttribute("newProduct", new Product());
+        model.addAttribute("categories", categoryRepository.findAll());
+        return "admin/add";
+    }
+
+    @PostMapping("/add")
+    public String addProducts(@ModelAttribute("newProduct") Product newProduct){
+        productService.updateProduct(newProduct);
+        return "redirect:/browse";
+    }
 
 }

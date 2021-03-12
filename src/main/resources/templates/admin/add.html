@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <link rel="stylesheet" th:href="@{/style.css}">
+    <script th:src="@{/script.js}" defer></script>
+    <script src="https://kit.fontawesome.com/d29d7d4ce7.js" crossorigin="anonymous"></script>
+    <title>Add Product</title>
+</head>
+
+
+<body>
+<header th:replace="fragments/general.html :: header"></header>
+
+<div class="main-container container my-6 add-container">
+    <h1 class="title is-2 has-text-centered mb-6">
+        Add Product</h1>
+    <div>
+        <form id='edit-form' th:object="${newProduct}" method="POST">
+            <div class="field">
+                <p class="my-3">
+                    <label class="subtitle">Product Name</label>
+                </p>
+                <input class="input" th:field="*{name}" type="text" id="add-product-name" required>
+            </div>
+            <div class="field">
+                <p class="my-3">
+                    <label class="subtitle">Description</label>
+                </p>
+                <textarea th:field="*{description}" class="textarea" id="add-product-description" required></textarea>
+            </div>
+            <div class="field">
+                <p class="my-3">
+                    <label th:field="*{imageURL}" class="subtitle">Image URL</label>
+                </p>
+                <input class="input" type="text" id="add-product-url" required>
+            </div>
+
+            <div class="field">
+                <p class="my-3">
+                    <label class="subtitle">Category</label>
+                </p>
+                <div class="select is-primary is-multiple">
+                    <select th:field="*{categories}" multiple>
+                        <option th:field="*{categories}" th:each="category : ${categories}" th:text="${category.getName()}") th:value="${category.getName()}">
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="field">
+                <p class="my-3">
+                    <label class="subtitle">Quantity</label>
+                </p>
+                <input th:field="*{quantity}" class="input" type="text" id="add-product-quantity" required>
+            </div>
+            <div class="field">
+                <p class="my-3">
+                    <label class="subtitle">Price</label>
+                </p>
+                <input th:field="*{price}" class="input" type="text" id="add-product-price" required>
+            </div>
+            <div class="field">
+                <p class="my-3">
+                    <label class="subtitle">Discount Rate</label>
+                </p>
+                <input th:field="*{discountRate}" class="input" type="text" id="add-product-discount" required>
+            </div>
+            <div class="field">
+                <p class="my-3">
+                    <label class="subtitle">Hidden</label>
+                </p>
+                <div class="control">
+                    <label class="radio">
+                        <input th:field="*{hidden}" class="radio" type="radio" name="hidden"  value="true" required>
+                        Yes
+                    </label>
+                    <label class="radio">
+                        <input class="radio" type="radio" name="hidden" th:field="*{hidden}" value="false" required>
+                        No
+                    </label>
+                </div>
+            </div>
+            <button type="submit" class="button my-3 is-primary" id="add-button">Add</button>
+        </form>
+    </div>
+</div>
+
+
+<footer th:replace="fragments/general.html :: footer"></footer>
+
+
+</body>
+</html>
