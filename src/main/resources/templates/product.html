@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <meta charset="UTF-8">
@@ -39,7 +39,7 @@
                    th:text="${product.getDiscountRate == 0} ? '' :
                                ${#numbers.formatCurrency(product.getOriginalPrice)}"></p>
             </div>
-            <div class="is-flex">
+            <div class="is-flex" sec:authorize="!hasAnyRole('ROLE_ADMIN')">
                 <div class="is-flex is-align-items-center is-justify-center is-marginless is-narrow">
                     <button class="icon is-small button is-black"
                             th:attr="onclick=|minusButton()|">

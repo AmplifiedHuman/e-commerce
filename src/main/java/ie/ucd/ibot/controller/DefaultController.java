@@ -2,6 +2,7 @@ package ie.ucd.ibot.controller;
 
 import ie.ucd.ibot.entity.Product;
 import ie.ucd.ibot.entity.User;
+import ie.ucd.ibot.entity.UserRole;
 import ie.ucd.ibot.service.ProductService;
 import ie.ucd.ibot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import java.util.Optional;
 public class DefaultController {
     private final ProductService productService;
     private final UserService userService;
+
     @Autowired
     public DefaultController(ProductService productService, UserService userService) {
         this.productService = productService;
@@ -28,7 +30,7 @@ public class DefaultController {
 
     @GetMapping("/")
     public String index(Model model, @AuthenticationPrincipal User sessionUser) {
-        if(sessionUser != null){
+        if (sessionUser != null) {
             User user = userService.getUserById(sessionUser.getId());
             model.addAttribute("user", user);
         }
@@ -63,11 +65,17 @@ public class DefaultController {
 
     @GetMapping("/search")
     public String search(Model model, @RequestParam("page") Optional<Integer> page,
-                         @RequestParam("size") Optional<Integer> size, @RequestParam Optional<String> name) {
+                         @RequestParam("size") Optional<Integer> size, @RequestParam Optional<String> name,
+                         @AuthenticationPrincipal User sessionUser) {
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(5);
         String s = name.orElse("");
-        Page<Product> productPage = productService.findByName(s, PageRequest.of(currentPage - 1, pageSize));
+        Page<Product> productPage;
+        if (sessionUser == null || sessionUser.getUserRole().equals(UserRole.ROLE_USER)) {
+            productPage = productService.findByName(s, PageRequest.of(currentPage - 1, pageSize), false);
+        } else {
+            productPage = productService.findByName(s, PageRequest.of(currentPage - 1, pageSize), true);
+        }
         model.addAttribute("products", productPage.toList());
         model.addAttribute("total", productPage.getTotalElements());
         model.addAttribute("currentPage", currentPage);
@@ -77,9 +85,10 @@ public class DefaultController {
     }
 
     @GetMapping("/product/{id}")
-    public String product(Model model, @PathVariable int id) {
+    public String product(Model model, @PathVariable Long id, @AuthenticationPrincipal User sessionUser) {
         Optional<Product> product = productService.findByID(id);
-        if(product.isEmpty()) return "error";
+        if (product.isEmpty()) return "error";
+        model.addAttribute("stock", product.get().getQuantity());
         model.addAttribute("product", product.get());
         return "product";
     }

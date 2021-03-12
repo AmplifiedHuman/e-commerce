@@ -53,6 +53,12 @@ body {
     width: 500px;
 }
 
+.edit-container, .add-container {
+    max-width: 1000px;
+    margin: 0;
+    flex-grow: 1;
+}
+
 .product-image {
     max-width: 600px;
 }
@@ -164,3 +170,4 @@ svg {
         text-align: center;
     }
 }
+

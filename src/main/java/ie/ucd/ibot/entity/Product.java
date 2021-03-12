@@ -3,6 +3,7 @@ package ie.ucd.ibot.entity;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Set;
@@ -18,9 +19,11 @@ public class Product implements Serializable {
     private Timestamp createdDate;
 
     @Column
+    @NotEmpty(message = "Product name cannot be empty.")
     private String name;
 
     @Column(length = 2000)
+    @Size(min = 1, max = 2000, message = "Description must be between 1 and 2000 characters.")
     private String description;
 
     @Column(length = 300)
@@ -30,16 +33,23 @@ public class Product implements Serializable {
     private Set<Category> categories;
 
     @Column
+    @Positive(message = "Quantity must be greater than 1")
     private int quantity;
 
     @Column
+    @Positive(message = "Price must be greater than 1")
     private double price;
 
     @Column
     private boolean isHidden;
 
     @Column
+    @Min(value = 0, message = "Discount Rate should not be less than 0")
+    @Max(value = 1, message = "Discount Rate should not be greater than 1")
     private double discountRate;
+
+    @Transient
+    private double originalPrice;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private Set<CartItem> items;
@@ -105,6 +115,10 @@ public class Product implements Serializable {
 
     public double getOriginalPrice() {
         return price;
+    }
+
+    public void setOriginalPrice(double originalPrice) {
+        this.price = originalPrice;
     }
 
     public boolean isHidden() {

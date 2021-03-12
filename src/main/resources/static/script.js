@@ -86,12 +86,15 @@ const updateTotal = async (updateCartPrice) => {
     const response = await fetch(baseURL + "/cart/total");
     const responseText = await response.text();
     let total = document.querySelector("#cart-total-amount");
-    total.textContent = responseText;
     if (updateCartPrice) {
         const cartPrice = document.querySelector("#cart-total-price");
         cartPrice.textContent = responseText;
     }
-    return total.textContent;
+    if (total) {
+        total.textContent = responseText;
+        return total.textContent;
+    }
+    return null;
 }
 
 // product page
@@ -122,19 +125,21 @@ function backButton() {
     window.history.back();
 }
 
-const updateOrder = async(id) => {
+const updateOrder = async (id) => {
     const baseURL = window.location.origin;
     const statusSelect = document.getElementById('new-order-status');
     const newOrderStatus = statusSelect[statusSelect.selectedIndex].value;
     let data = new URLSearchParams();
     data.append('id', id);
     data.append('newOrderStatus', newOrderStatus);
-    await fetch(baseURL+"/admin/order/update", {
+    const response = await fetch(baseURL + "/admin/order", {
         method: 'POST',
         body: data,
     });
-    const orderStatusField = document.querySelector("#order-status");
-    orderStatusField.textContent = newOrderStatus;
+    if (response.isSuccess) {
+        const orderStatusField = document.querySelector("#order-status");
+        orderStatusField.textContent = newOrderStatus;
+    }
 }
 
 function viewMessage(id) {
@@ -202,3 +207,18 @@ const sendMessage = async(id) => {
     }
     location.reload();
 }
+const removeProduct = async (id) => {
+    const baseURL = window.location.origin;
+    let data = new URLSearchParams();
+    data.append('id', id);
+    const response = await fetch(baseURL + "/admin/delete", {
+        method: 'POST',
+        body: data,
+    });
+    if (response.isSuccess) {
+        document.querySelector("#product-id-" + id).remove();
+    }
+}
+
+updateTotal(false).catch(e => console.log(e));
+search();

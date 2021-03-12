@@ -1,5 +1,7 @@
 package ie.ucd.ibot.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
@@ -10,6 +12,7 @@ public class Category implements Serializable {
     @Column(nullable = false)
     private String name;
 
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "categories")
     private Set<Product> products;
 
