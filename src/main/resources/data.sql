@@ -88,6 +88,10 @@ VALUES (current_timestamp(),'Pokemon Book, Learn about your favourite Pokemon an
         0, 'https://images.randomhouse.com/cover/9781524772598?width=200', 0, 'Pokemon Storybook', 4.8, 35);
 
 
+INSERT INTO product (created_date, description, discount_rate, imageurl, is_hidden, name, price, quantity)
+VALUES (current_timestamp(),'IBOT Dynamic Microphone, Best possible streaming mic in today''s market. Filters out all echoing, fuzz and unnecessary static. Because we all know ~ It happens all the time when your trying to teach some important materials that can heavily effect some young people''s lives. The mic also blocks your clicky keyboard noises which sounds like a snare drum. And some coughing which sounds like a tornado as well as squeeky chairs from the university that claims to be poor. But get your IBOT mic today and save your students'' lives. We''ll even give it to you for basically free!',
+        0.999, 'https://www.bhphotovideo.com/images/images2500x2500/Shure_SM7B_SM7B_Cardioid_Dynamic_225820.jpg', 0, 'IBOT Dynamic Microphone', 499.99, 35);
+
 
 
 
@@ -192,3 +196,9 @@ INSERT INTO product_categories(products_id, categories_name)
 VALUES (21, 'BOOKS');
 INSERT INTO product_categories(products_id, categories_name)
 VALUES (21, 'FEATURED');
+INSERT INTO product_categories(products_id, categories_name)
+VALUES (22, 'ELECTRONICS');
+INSERT INTO product_categories(products_id, categories_name)
+VALUES (22, 'OFFERS');
+INSERT INTO product_categories(products_id, categories_name)
+VALUES (22, 'FEATURED');
