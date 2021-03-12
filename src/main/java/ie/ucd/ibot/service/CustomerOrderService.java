@@ -1,6 +1,5 @@
 package ie.ucd.ibot.service;
 
-import com.stripe.model.Order;
 import ie.ucd.ibot.entity.*;
 import ie.ucd.ibot.repository.CustomerOrderRepository;
 import ie.ucd.ibot.repository.OrderItemRepository;
@@ -58,13 +57,20 @@ public class CustomerOrderService {
     }
 
     @Transactional
-    public void updateOrder(Long id, OrderStatus orderStatus){
-        CustomerOrder customerOrder = customerOrderRepository.findById(id).get();
-        customerOrder.setStatus(orderStatus);
-        customerOrderRepository.save(customerOrder);
+    public void updateOrder(Long id, OrderStatus orderStatus) {
+        Optional<CustomerOrder> customerOrder = customerOrderRepository.findById(id);
+        if (customerOrder.isPresent()) {
+            CustomerOrder order = customerOrder.get();
+            order.setStatus(orderStatus);
+            customerOrderRepository.save(order);
+        }
     }
 
     public List<CustomerOrder> findCustomerOrderByStatus(OrderStatus orderStatus) {
         return customerOrderRepository.findCustomerOrdersByStatus(orderStatus);
+    }
+
+    public Long countOrdersByUserId(Long userId) {
+        return customerOrderRepository.countCustomerOrderByUserId(userId);
     }
 }

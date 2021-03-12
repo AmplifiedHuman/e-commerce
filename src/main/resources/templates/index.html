@@ -14,35 +14,72 @@
 
 <body>
 <header th:replace="fragments/general.html :: header"></header>
-<section class="hero is-primary" sec:authorize="isAuthenticated()">
-    <div class = "hero-body">
-        <p class ="title">
+<section class="hero is-primary is-small" sec:authorize="isAuthenticated()">
+    <div class="hero-body">
+        <p class="title has-text-centered">
             Welcome!
         </p>
-        <p class = "subtitle" th:text="${user.firstName}">
+        <p class="subtitle has-text-centered" th:text="${user.getFullName()}">
         </p>
     </div>
 </section>
-<section class="hero has-background-danger-light">
+<div class="wave-container">
     <div class="hero-body">
-        <p class="title">
-            <span class="mr-5">Featured This Week</span>
-            <button class="button is-primary" onclick="window.location.href='/browse'">
-                Browse
-            </button>
-        </p>
+        <div class="container">
+            <div class="columns is-vcentered">
+                <div class="column is-5 is-offset-1 landing-caption">
+                    <h1 class="title is-1 is-bold is-spaced has-text-white">
+                        International Bot
+                    </h1>
+                    <h2 class="subtitle is-5 is-muted has-text-white">
+                        Shopping, Reimagined.
+                    </h2>
+                    <div class="button-wrap">
+                        <a th:href="@{/browse}" class="button is-rounded primary-btn raised">
+                            Browse Products
+                        </a>
+                    </div>
+                </div>
+                <div class="column is-5">
+                    <figure class="image is-4by3">
+                        <img src="https://res.cloudinary.com/amplifiedhuman/image/upload/v1615519730/shopping-cart-colour_wk0pmg.svg"
+                             alt="cover-image" class="cover-image">
+                    </figure>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="waves">
+        <img src="https://res.cloudinary.com/amplifiedhuman/image/upload/v1615521485/wave_2_fvu38g.svg"
+             alt="waves">
+    </div>
+</div>
+<section class="hero">
+    <div class="hero-body featured-body">
+        <div class="title-wrapper has-text-centered">
+            <h2 class="title is-2">Featured</h2>
+            <hr>
+        </div>
         <div class="subtitle" th:replace="fragments/cards.html :: cards(${featured})"></div>
+        <div class="button-wrap is-flex is-justify-content-center">
+            <a th:href="@{/browse(category=ELECTRONICS)}" class="button is-rounded is-link raised is-light is-medium">
+                View More
+            </a>
+        </div>
     </div>
 </section>
-<section class="hero has-background-warning-light">
+<section class="hero">
     <div class="hero-body">
-        <p class="title">
-            <span class="mr-5">Offers</span>
-            <button class="button is-primary" onclick="window.location.href='/browse'">
-                Browse
-            </button>
-        </p>
-        <div class="subtitle" th:replace="fragments/cards.html :: cards(${offers})"></div>
+        <div class="title-wrapper has-text-centered">
+            <h2 class="title is-2">Offers</h2>
+            <hr>
+        </div>
+        <div class="subtitle" th:replace="fragments/cards.html :: cards(${featured})"></div>
+        <div class="button-wrap is-flex is-justify-content-center">
+            <a th:href="@{/browse(category=OFFERS)}" class="button is-rounded is-link raised is-light is-medium">
+                View More
+            </a>
+        </div>
     </div>
 </section>
 

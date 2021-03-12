@@ -29,7 +29,11 @@ body {
 
 .product-card {
     width: 300px;
-    margin: 0 auto;
+    margin: 10px auto;
+}
+
+.card-column {
+    flex-grow: 0;
 }
 
 .product-page {
@@ -55,6 +59,39 @@ body {
 
 .product-image {
     max-width: 600px;
+}
+
+.image .cover-image {
+    object-fit: fill;
+    max-width: 500px;
+}
+
+hr {
+    width: 50%;
+    margin: 20px auto;
+    display: block;
+}
+
+.featured-body {
+    padding-top: 0;
+}
+
+/*Waves*/
+.wave-container {
+    position: relative;
+    background: #0D5F82;
+    color: #FFF;
+    text-align: center;
+    overflow: hidden;
+
+}
+
+.wave-container svg {
+    display: block;
+}
+
+.waves {
+    background-color: white;
 }
 
 /* 404 page credits: https://codepen.io/saransh/pen/aezht*/

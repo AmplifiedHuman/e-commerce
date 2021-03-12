@@ -2,6 +2,7 @@ package ie.ucd.ibot.service;
 
 import com.stripe.exception.StripeException;
 import com.stripe.model.PaymentIntent;
+import com.stripe.net.RequestOptions;
 import com.stripe.param.PaymentIntentCreateParams;
 import ie.ucd.ibot.entity.ConfirmPaymentRequest;
 import ie.ucd.ibot.entity.User;
@@ -9,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -75,6 +77,14 @@ public class PaymentService {
                 .setPaymentMethod(paymentMethodId)
                 .setConfirmationMethod(PaymentIntentCreateParams.ConfirmationMethod.MANUAL)
                 .build();
-        return PaymentIntent.create(createParams);
+        // idempotent key to prevent duplicate requests
+        long epochMinutes = Instant.now().getEpochSecond() / 60;
+        String key = String.format("%s-%d-%f-%d",
+                user.getEmail(), orderService.countOrdersByUserId(user.getId()), user.getCart().getTotal(), epochMinutes);
+        RequestOptions requestOptions = RequestOptions
+                .builder()
+                .setIdempotencyKey(key)
+                .build();
+        return PaymentIntent.create(createParams, requestOptions);
     }
 }
