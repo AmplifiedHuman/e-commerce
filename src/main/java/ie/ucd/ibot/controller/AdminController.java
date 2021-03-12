@@ -163,10 +163,9 @@ public class AdminController {
         if(id == null || subject == null || messageContent == null || messageType == null){
             return "error";
         }
-        User user = userService.getUserById(id);
-        messageService.getMessageById(messageId).get().setType(MessageType.ANSWERED);
-        messageContent += "\n\nCUSTOMER WROTE:\n" + messageService.getMessageById(messageId).get().getMessageContent();
-        messageService.createMessage(user, messageContent, subject, messageType);
+        String newMessageContent = "ADMIN WROTE:\n" + messageContent;
+        newMessageContent += "\n\nCUSTOMER WROTE:\n" + messageService.getMessageById(messageId).get().getMessageContent();
+        messageService.updateMessage(messageId, newMessageContent, subject, messageType);
         return "admin/contact";
     }
 }
