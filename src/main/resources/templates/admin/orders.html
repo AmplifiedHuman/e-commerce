@@ -15,7 +15,8 @@
 <body>
 <header th:replace="fragments/general.html :: header"></header>
 <div class="main-container container my-6">
-    <h1 class="title is-2 has-text-centered mb-6 is-capitalized">New Orders</h1>
+    <h1 class="title is-1 has-text-centered mb-6 is-capitalized">Orders</h1>
+    <h1 class="title is-3 has-text-centered mt-6 is-capitalized">New Orders</h1>
     <table class="table is-hoverable is-fullwidth">
         <thead>
         <tr>
@@ -23,24 +24,19 @@
             <th class="has-text-centered">Date</th>
             <th class="has-text-centered">Status</th>
             <th class="has-text-centered">Total</th>
-            <th></th>
         </tr>
         </thead>
-        <tbody>
-        <tr th:each="order : ${newOrders}">
+        <tbody class="clickable">
+        <tr th:each="order : ${newOrders}"
+            th:attr="onclick=|location.href='@{/admin/order/{id}(id=${order.getId()})}'|">
             <td th:text="${'#' + order.getId()}"></td>
             <td th:text="${#dates.format(order.getCreatedDate(), 'd-M-yyyy')}" class="has-text-centered"></td>
             <td th:text="${order.getStatus().name()}" class="has-text-centered"></td>
             <td th:text="${#numbers.formatCurrency(order.getTotal())}" class="has-text-centered"></td>
-            <td>
-                <a class="button is-small is-info is-rounded" th:href="@{/admin/order/{id}(id=${order.getId()})}">
-                    View
-                </a>
-            </td>
         </tr>
         </tbody>
     </table>
-    <h1 class="title is-2 has-text-centered mb-6 is-capitalized">Shipped Orders</h1>
+    <h1 class="title is-3 has-text-centered mt-6 is-capitalized">Shipped Orders</h1>
     <table class="table is-hoverable is-fullwidth">
         <thead>
         <tr>
@@ -48,24 +44,18 @@
             <th class="has-text-centered">Date</th>
             <th class="has-text-centered">Status</th>
             <th class="has-text-centered">Total</th>
-            <th></th>
         </tr>
         </thead>
-        <tbody>
-        <tr th:each="order : ${shipped}">
+        <tbody class="clickable">
+        <tr th:each="order : ${shipped}" th:attr="onclick=|location.href='@{/admin/order/{id}(id=${order.getId()})}'|">
             <td th:text="${'#' + order.getId()}"></td>
             <td th:text="${#dates.format(order.getCreatedDate(), 'd-M-yyyy')}" class="has-text-centered"></td>
             <td th:text="${order.getStatus().name()}" class="has-text-centered"></td>
             <td th:text="${#numbers.formatCurrency(order.getTotal())}" class="has-text-centered"></td>
-            <td>
-                <a class="button is-small is-info is-rounded" th:href="@{/admin/order/{id}(id=${order.getId()})}">
-                    View
-                </a>
-            </td>
         </tr>
         </tbody>
     </table>
-    <h1 class="title is-2 has-text-centered mb-6 is-capitalized">Cancelled Orders</h1>
+    <h1 class="title is-3 has-text-centered mt-6 is-capitalized">Cancelled Orders</h1>
     <table class="table is-hoverable is-fullwidth">
         <thead>
         <tr>
@@ -73,24 +63,18 @@
             <th class="has-text-centered">Date</th>
             <th class="has-text-centered">Status</th>
             <th class="has-text-centered">Total</th>
-            <th></th>
         </tr>
         </thead>
-        <tbody>
-        <tr th:each="order : ${cancelled}">
+        <tbody class="clickable">
+        <tr th:each="order : ${cancelled}" th:attr="onclick=|location.href='@{/admin/order/{id}(id=${order.getId()})}'|">
             <td th:text="${'#' + order.getId()}"></td>
             <td th:text="${#dates.format(order.getCreatedDate(), 'd-M-yyyy')}" class="has-text-centered"></td>
             <td th:text="${order.getStatus().name()}" class="has-text-centered"></td>
             <td th:text="${#numbers.formatCurrency(order.getTotal())}" class="has-text-centered"></td>
-            <td>
-                <a class="button is-small is-info is-rounded" th:href="@{/admin/order/{id}(id=${order.getId()})}">
-                    View
-                </a>
-            </td>
         </tr>
         </tbody>
     </table>
-    <h1 class="title is-2 has-text-centered mb-6 is-capitalized">Delivered Orders</h1>
+    <h1 class="title is-3 has-text-centered mt-6 is-capitalized">Delivered Orders</h1>
     <table class="table is-hoverable is-fullwidth">
         <thead>
         <tr>
@@ -98,20 +82,14 @@
             <th class="has-text-centered">Date</th>
             <th class="has-text-centered">Status</th>
             <th class="has-text-centered">Total</th>
-            <th></th>
         </tr>
         </thead>
-        <tbody>
-        <tr th:each="order : ${delivered}">
+        <tbody class="clickable">
+        <tr th:each="order : ${delivered}" th:attr="onclick=|location.href='@{/admin/order/{id}(id=${order.getId()})}'|">
             <td th:text="${'#' + order.getId()}"></td>
             <td th:text="${#dates.format(order.getCreatedDate(), 'd-M-yyyy')}" class="has-text-centered"></td>
             <td th:text="${order.getStatus().name()}" class="has-text-centered"></td>
             <td th:text="${#numbers.formatCurrency(order.getTotal())}" class="has-text-centered"></td>
-            <td>
-                <a class="button is-small is-info is-rounded" th:href="@{/admin/order/{id}(id=${order.getId()})}">
-                    View
-                </a>
-            </td>
         </tr>
         </tbody>
     </table>
