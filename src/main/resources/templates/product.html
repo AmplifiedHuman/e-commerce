@@ -16,8 +16,8 @@
 <header th:replace="fragments/general.html :: header"></header>
 <div class="main-container container my-6">
     <div class="columns is-align-items-flex-start is-multiline is-centered is-paddingless product-page">
-        <div class="column container">
-            <figure class="image is-square product-image">
+        <div class="column container is-half">
+            <figure class="image product-image">
                 <img th:src="${product.getImageURL()}" alt="Placeholder image" src="">
             </figure>
         </div>

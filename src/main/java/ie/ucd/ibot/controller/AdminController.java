@@ -1,24 +1,20 @@
 package ie.ucd.ibot.controller;
 
-import ie.ucd.ibot.entity.CustomerOrder;
-import ie.ucd.ibot.entity.OrderStatus;
-import ie.ucd.ibot.entity.Product;
-import ie.ucd.ibot.entity.Result;
-import ie.ucd.ibot.repository.CategoryRepository;
 import ie.ucd.ibot.entity.*;
+import ie.ucd.ibot.repository.CategoryRepository;
 import ie.ucd.ibot.service.CustomerOrderService;
-import ie.ucd.ibot.service.ProductService;
 import ie.ucd.ibot.service.MessageService;
+import ie.ucd.ibot.service.ProductService;
 import ie.ucd.ibot.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Collections;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -91,11 +87,15 @@ public class AdminController {
 
     @PostMapping("/edit/{id}")
     public String updateProduct(Model model, @ModelAttribute("product") @Valid Product product, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("categories", categoryRepository.findAll());
-            return "admin/edit";
+        try {
+            if (bindingResult.hasErrors()) {
+                model.addAttribute("categories", categoryRepository.findAll());
+                return "admin/edit";
+            }
+            productService.updateProduct(product);
+        } catch (IOException e) {
+            return "error";
         }
-        productService.updateProduct(product);
         return "redirect:/browse";
     }
 
@@ -126,15 +126,23 @@ public class AdminController {
     @PostMapping("/add")
     public String addProducts(Model model, @ModelAttribute("newProduct") @Valid Product newProduct,
                               BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("categories", categoryRepository.findAll());
-            return "admin/add";
+        try {
+            if (bindingResult.hasErrors()) {
+                model.addAttribute("categories", categoryRepository.findAll());
+                return "admin/add";
+            } else if (newProduct.getTempImage() == null || newProduct.getTempImage().isEmpty()) {
+                bindingResult.addError(new ObjectError("tempImage", "Image cannot be empty"));
+                model.addAttribute("categories", categoryRepository.findAll());
+                return "admin/add";
+            }
+            productService.updateProduct(newProduct);
+        } catch (IOException e) {
+            return "error";
         }
-        productService.updateProduct(newProduct);
         return "redirect:/browse";
     }
 
-    @RequestMapping("/contact")
+    @GetMapping("/contact")
     public String viewMessages(Model model) {
         List<Message> messages = messageService.getAllMessages();
 
@@ -160,7 +168,7 @@ public class AdminController {
     @PostMapping("/contact/add")
     public String addMessage(@RequestParam Long id, @RequestParam String subject, @RequestParam String messageContent,
                              @RequestParam MessageType messageType, @RequestParam Long messageId) {
-        if(id == null || subject == null || messageContent == null || messageType == null){
+        if (id == null || subject == null || messageContent == null || messageType == null) {
             return "error";
         }
         String newMessageContent = "ADMIN WROTE:\n" + messageContent;

@@ -132,11 +132,12 @@ const updateOrder = async (id) => {
     let data = new URLSearchParams();
     data.append('id', id);
     data.append('newOrderStatus', newOrderStatus);
-    const response = await fetch(baseURL + "/admin/order", {
+    let response = await fetch(baseURL + "/admin/order", {
         method: 'POST',
         body: data,
     });
-    if (response.isSuccess) {
+    response = await response.json();
+    if (response.success) {
         const orderStatusField = document.querySelector("#order-status");
         orderStatusField.textContent = newOrderStatus;
     }
@@ -144,18 +145,18 @@ const updateOrder = async (id) => {
 
 function viewMessage(id) {
     $.ajax({
-        url: "/user/contact/"+id,
-        success: function( result ) {
-            $( "#contact-view" ).html(result);
+        url: "/user/contact/" + id,
+        success: function (result) {
+            $("#contact-view").html(result);
         }
     });
 }
 
 function viewMessageAdmin(id) {
     $.ajax({
-        url: "/admin/contact/"+id,
-        success: function( result ) {
-            $( "#contact-view" ).html(result);
+        url: "/admin/contact/" + id,
+        success: function (result) {
+            $("#contact-view").html(result);
             if(document.getElementById('messageType').textContent === "ANSWERED"){
                 $("#reply-box").hide();
             }
@@ -165,22 +166,22 @@ function viewMessageAdmin(id) {
 
 function viewNewMessage(id) {
     $.ajax({
-        url: "/user/contactForm/"+id,
-        success: function( result ) {
-            $( "#contact-view" ).html(result);
+        url: "/user/contactForm/" + id,
+        success: function (result) {
+            $("#contact-view").html(result);
         }
     });
 }
 
-const sendMessage = async(id) => {
+const sendMessage = async (id) => {
     const baseURL = window.location.origin;
     const subjectSelect = document.getElementById('subject');
-    let subject = "";
-    let messageType = "";
-    if(document.getElementById('messageType') === null){
+    let subject;
+    let messageType;
+    if (document.getElementById('messageType') === null) {
         messageType = "NEW";
         subject = subjectSelect[subjectSelect.selectedIndex].value;
-    }   else {
+    } else {
         messageType = "ANSWERED";
         subject = subjectSelect.textContent;
     }
@@ -190,15 +191,15 @@ const sendMessage = async(id) => {
     data.append('subject', subject);
     data.append('messageContent', messageContent);
     data.append('messageType', messageType);
-    if(messageType === "ANSWERED"){
+    if (messageType === "ANSWERED") {
         const messageId = document.getElementById('messageId').textContent;
         data.append('messageId', messageId);
-        await fetch(baseURL+"/admin/contact/add", {
+        await fetch(baseURL + "/admin/contact/add", {
             method: 'POST',
             body: data,
         });
-    } else{
-        await fetch(baseURL+"/user/contact/add", {
+    } else {
+        await fetch(baseURL + "/user/contact/add", {
             method: 'POST',
             body: data,
         });
@@ -209,11 +210,12 @@ const removeProduct = async (id) => {
     const baseURL = window.location.origin;
     let data = new URLSearchParams();
     data.append('id', id);
-    const response = await fetch(baseURL + "/admin/delete", {
+    let response = await fetch(baseURL + "/admin/delete", {
         method: 'POST',
         body: data,
     });
-    if (response.isSuccess) {
+    response = await response.json();
+    if (response.success) {
         document.querySelector("#product-id-" + id).remove();
     }
 }

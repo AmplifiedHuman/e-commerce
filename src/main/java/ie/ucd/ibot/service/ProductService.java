@@ -10,17 +10,21 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.util.Optional;
 
 @Service
 public class ProductService {
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
+    private final ImageService imageService;
 
     @Autowired
-    public ProductService(ProductRepository productRepository, CategoryRepository categoryRepository) {
+    public ProductService(ProductRepository productRepository, CategoryRepository categoryRepository,
+                          ImageService imageService) {
         this.productRepository = productRepository;
         this.categoryRepository = categoryRepository;
+        this.imageService = imageService;
     }
 
     public Page<Product> findPaginated(Pageable pageable) {
@@ -47,7 +51,13 @@ public class ProductService {
     }
 
     @Transactional
-    public void updateProduct(Product product) {
+    public void updateProduct(Product product) throws IOException {
+        // save once to generate id
+        productRepository.save(product);
+        if (product.getTempImage() != null && !product.getTempImage().isEmpty()) {
+            String imageURL = imageService.processImage(product.getTempImage(), product.getId().toString());
+            product.setImageURL(imageURL);
+        }
         productRepository.save(product);
     }
 

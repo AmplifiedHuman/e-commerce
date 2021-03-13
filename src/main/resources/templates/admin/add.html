@@ -20,7 +20,7 @@
         <h1 class="title is-2 has-text-centered mb-6">
             Add Product</h1>
         <div>
-            <form id='edit-form' th:object="${newProduct}" method="POST">
+            <form id='edit-form' th:object="${newProduct}" method="POST" enctype="multipart/form-data">
                 <div class="field">
                     <p class="my-3">
                         <label class="subtitle">Product Name</label>
@@ -40,9 +40,12 @@
                 </div>
                 <div class="field">
                     <p class="my-3">
-                        <label th:field="*{imageURL}" class="subtitle">Image URL</label>
+                        <label th:field="*{tempImage}" class="subtitle">Image</label>
                     </p>
-                    <input class="input" type="text" id="add-product-url" required>
+                    <input type="file" th:field="*{tempImage}" class="input" accept=".png,.jpeg,.jpg,.gif,.svg"
+                           >
+                    <p th:each="error: ${#fields.errors('tempImage')}" class="has-text-danger"
+                       th:text="1">Validation error</p>
                 </div>
 
                 <div class="field">

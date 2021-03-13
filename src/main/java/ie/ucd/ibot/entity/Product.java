@@ -1,6 +1,9 @@
 package ie.ucd.ibot.entity;
 
+import ie.ucd.ibot.validation.ValidImage;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -50,6 +53,11 @@ public class Product implements Serializable {
 
     @Transient
     private double originalPrice;
+
+    @Transient
+    @NotNull
+    @ValidImage
+    private MultipartFile tempImage;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private Set<CartItem> items;
@@ -175,5 +183,13 @@ public class Product implements Serializable {
         if (quantity - n >= 0) {
             quantity -= n;
         }
+    }
+
+    public MultipartFile getTempImage() {
+        return tempImage;
+    }
+
+    public void setTempImage(MultipartFile tempImage) {
+        this.tempImage = tempImage;
     }
 }
