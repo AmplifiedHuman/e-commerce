@@ -65,7 +65,7 @@ public class CartService {
         Cart cart = cartRepository.getCartByUserId(userID);
         Optional<Product> product = productRepository.findById(productID);
         CartItem item = cartItemRepository.getByCartAndProductId(cart, productID);
-        if (cart == null || product.isEmpty()) {
+        if (cart == null || !product.isPresent()) {
             throw new RuntimeException("Invalid cart or product");
         }
         item = addCartItemHelper(product.get(), item, cart, quantity);
@@ -75,7 +75,7 @@ public class CartService {
     public CartItem addSessionCartItem(Long productID, Integer quantity, Cart sessionCart) {
         Optional<Product> product = productRepository.findById(productID);
         CartItem item = getSessionCartItem(sessionCart, productID);
-        if (product.isEmpty()) {
+        if (!product.isPresent()) {
             throw new RuntimeException("Invalid product");
         }
         return addCartItemHelper(product.get(), item, sessionCart, quantity);
@@ -86,7 +86,7 @@ public class CartService {
         Cart cart = cartRepository.getCartByUserId(userID);
         Optional<Product> product = productRepository.findById(productID);
         CartItem item = cartItemRepository.getByCartAndProductId(cart, productID);
-        if (cart == null || product.isEmpty() || item == null) {
+        if (cart == null || !product.isPresent() || item == null) {
             throw new RuntimeException("Invalid cart, item or product");
         }
         item = removeCartItemHelper(product.get(), item, cart, quantity);
@@ -96,7 +96,7 @@ public class CartService {
     public CartItem removeSessionCartItem(Long productID, Integer quantity, Cart sessionCart) {
         Optional<Product> product = productRepository.findById(productID);
         CartItem item = getSessionCartItem(sessionCart, productID);
-        if (product.isEmpty() || item == null) {
+        if (!product.isPresent() || item == null) {
             throw new RuntimeException("Invalid product or item");
         }
         return removeCartItemHelper(product.get(), item, sessionCart, quantity);

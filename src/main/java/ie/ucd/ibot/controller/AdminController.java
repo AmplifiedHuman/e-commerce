@@ -27,7 +27,6 @@ public class AdminController {
     private final ProductService productService;
     private final CategoryRepository categoryRepository;
     private final MessageService messageService;
-    private final UserService userService;
 
     @RequestMapping("/orders")
     public String viewOrders(Model model) {
@@ -54,7 +53,7 @@ public class AdminController {
     public String viewOrder(@PathVariable Long id, Model model) {
         // only allow users to view their own order
         Optional<CustomerOrder> customerOrder = customerOrderService.getOrderById(id);
-        if (customerOrder.isEmpty()) {
+        if (!customerOrder.isPresent()) {
             return "error";
         }
         model.addAttribute("order", customerOrder.get());
@@ -76,7 +75,7 @@ public class AdminController {
     public String viewEditProduct(Model model, @PathVariable Long id) {
         if (id == null) return "error";
         Optional<Product> productOptional = productService.findByID(id);
-        if (productOptional.isEmpty()) {
+        if (!productOptional.isPresent()) {
             return "error";
         }
         Product product = productOptional.get();
@@ -157,7 +156,7 @@ public class AdminController {
     @GetMapping("/contact/{id}")
     public String viewMessage(@PathVariable Long id, Model model) {
         Optional<Message> message = messageService.getMessageById(id);
-        if (message.isEmpty()) {
+        if (!message.isPresent()) {
             return "error";
         }
         model.addAttribute("message", message.get());

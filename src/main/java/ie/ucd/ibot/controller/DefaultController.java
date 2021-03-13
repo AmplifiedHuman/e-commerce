@@ -87,7 +87,7 @@ public class DefaultController {
     @GetMapping("/product/{id}")
     public String product(Model model, @PathVariable Long id) {
         Optional<Product> product = productService.findByID(id);
-        if (product.isEmpty()) return "error";
+        if (!product.isPresent()) return "error";
         model.addAttribute("stock", product.get().getQuantity());
         model.addAttribute("product", product.get());
         return "product";

@@ -76,7 +76,7 @@ public class UserController {
     public String viewOrder(@PathVariable Long id, @AuthenticationPrincipal User sessionUser, Model model) {
         // only allow users to view their own order
         Optional<CustomerOrder> customerOrder = customerOrderService.getOrderById(id);
-        if (customerOrder.isEmpty() || !sessionUser.getId().equals(customerOrder.get().getUser().getId())) {
+        if (!customerOrder.isPresent() || !sessionUser.getId().equals(customerOrder.get().getUser().getId())) {
             return "error";
         }
         model.addAttribute("order", customerOrder.get());
@@ -108,7 +108,7 @@ public class UserController {
     public String viewMessage(@PathVariable Long id, @AuthenticationPrincipal User sessionUser, Model model) {
         // only allow users to view their own order
         Optional<Message> message = messageService.getMessageById(id);
-        if (message.isEmpty() || !sessionUser.getId().equals(message.get().getUser().getId())) {
+        if (!message.isPresent() || !sessionUser.getId().equals(message.get().getUser().getId())) {
             return "error";
         }
         User user = userService.getUserById(sessionUser.getId());
