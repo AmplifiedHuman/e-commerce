@@ -47,13 +47,6 @@
                     Offers
                 </a>
 
-                <a class="navbar-item" th:href="@{/user/contact}" sec:authorize="hasAnyRole('ROLE_USER')">
-                    Contact
-                </a>
-                <a class="navbar-item" th:href="@{/admin/contact}" sec:authorize="hasAnyRole('ROLE_ADMIN')">
-                    Contact
-                </a>
-
                 <div class="navbar-item" th:id="search-box">
                     <input class="input is-normal is-fullwidth" type="text" placeholder="Search" id="search-input">
                 </div>
@@ -84,6 +77,18 @@
                               <i class="fas fa-box-open"></i>
                             </span>
                             <span>Orders</span>
+                        </a>
+                        <a class="button is-light is-info" th:href="@{/user/contact}" sec:authorize="hasAnyRole('ROLE_USER')">
+                            <span class="icon">
+                              <i class="fas fa-question-circle"></i>
+                            </span>
+                            <span>Contact</span>
+                        </a>
+                        <a class="button is-light is-info" th:href="@{/admin/contact}" sec:authorize="hasAnyRole('ROLE_ADMIN')">
+                            <span class="icon">
+                              <i class="fas fa-question-circle"></i>
+                            </span>
+                            <span>Contact</span>
                         </a>
                         <a class="button is-light is-info" th:href="@{/admin/add}" sec:authorize="hasAnyRole('ROLE_ADMIN')">
                             <span class="icon">

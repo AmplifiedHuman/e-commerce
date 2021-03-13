@@ -15,7 +15,7 @@
 
 <body>
 <header th:replace="fragments/general.html :: header"></header>
-<div class="columns main-container container my-6 contact-page is-align-items-flex-start">
+<div class="columns main-container container mt-4 contact-page is-align-items-flex-start">
     <div class="column">
         <h1 class="title is-2 has-text-centered mb-6 is-capitalized"
             th:text="Messages"></h1>
@@ -44,6 +44,12 @@
     <div class="column" id="contact-view">
 
     </div>
+</div>
+<div class="has-text-centered" sec:authorize="hasAnyRole('ROLE_USER')">
+    <h2 class="is-capitalized has-text-weight-bold">GDPR Compliance</h2>
+    <a class="button is-normal is-danger mt-2 mb-4" th:attr="onclick=|location.href='/user/gdpr'|">
+        Access My Data
+    </a>
 </div>
 <footer th:replace="fragments/general.html :: footer"></footer>
 </body>
