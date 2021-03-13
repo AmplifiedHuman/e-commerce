@@ -49,11 +49,7 @@ body {
     width: 300px;
 }
 
-.payment-container {
-    width: 500px;
-}
-
-.edit-container, .add-container {
+.edit-container, .add-container, .payment-container {
     max-width: 1000px;
     margin: 0;
     flex-grow: 1;
