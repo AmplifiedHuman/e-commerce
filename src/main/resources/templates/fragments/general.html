@@ -8,8 +8,8 @@
 <header th:fragment="header">
     <nav class="navbar p-2" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
-            <a class="navbar-item ibot-logo" th:href="@{/}">
-                <img src="https://cdn.cdnlogo.com/logos/a/1/amazon-icon.svg" alt="logo">
+            <a class="navbar-item-img-max-height 50 ibot-logo" th:href="@{/}">
+                <img id="ibot-logo" th:src="@{images/IBOT_logo.png}" width="50" height="50" alt="logo"/>
             </a>
             <a class="navbar-item is-size-5" th:href="@{/}">IBOT</a>
             <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false"
