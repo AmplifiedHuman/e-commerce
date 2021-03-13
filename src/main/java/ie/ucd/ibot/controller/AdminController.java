@@ -151,12 +151,11 @@ public class AdminController {
             model.addAttribute("messages", messages);
         }
 
-        return "admin/contact";
+        return "shared/contact";
     }
 
     @GetMapping("/contact/{id}")
     public String viewMessage(@PathVariable Long id, Model model) {
-        // only allow users to view their own order
         Optional<Message> message = messageService.getMessageById(id);
         if (message.isEmpty()) {
             return "error";
@@ -172,8 +171,11 @@ public class AdminController {
             return "error";
         }
         String newMessageContent = "ADMIN WROTE:\n" + messageContent;
-        newMessageContent += "\n\nCUSTOMER WROTE:\n" + messageService.getMessageById(messageId).get().getMessageContent();
+        Optional<Message> message = messageService.getMessageById(messageId);
+        if (message.isPresent()) {
+            newMessageContent += "\n\nCUSTOMER WROTE:\n" + message.get().getMessageContent();
+        }
         messageService.updateMessage(messageId, newMessageContent, subject, messageType);
-        return "admin/contact";
+        return "shared/contact";
     }
 }

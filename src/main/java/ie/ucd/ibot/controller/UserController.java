@@ -101,7 +101,7 @@ public class UserController {
         Collections.sort(messages);
         model.addAttribute("user", user);
         model.addAttribute("messages", messages);
-        return "user/contact";
+        return "shared/contact";
     }
 
     @GetMapping("/contact/{id}")
@@ -111,33 +111,30 @@ public class UserController {
         if (message.isEmpty() || !sessionUser.getId().equals(message.get().getUser().getId())) {
             return "error";
         }
-        if(sessionUser != null){
-            User user = userService.getUserById(sessionUser.getId());
-            model.addAttribute("user", user);
-        }
+        User user = userService.getUserById(sessionUser.getId());
+        model.addAttribute("user", user);
         model.addAttribute("message", message.get());
         return "shared/message";
     }
 
     @GetMapping("/contactForm/{id}")
-    public String viewNewMessage(@PathVariable Long id, @AuthenticationPrincipal User sessionUser, Model model) {
-        if(sessionUser != null){
-            User user = userService.getUserById(sessionUser.getId());
-            model.addAttribute("user", user);
-        }
+    public String viewNewMessage(@AuthenticationPrincipal User sessionUser, Model model) {
+        User user = userService.getUserById(sessionUser.getId());
+        model.addAttribute("user", user);
         return "user/contactForm";
     }
 
     @PostMapping("/contact/add")
-    public String addMessage(@AuthenticationPrincipal User sessionUser,
+    @ResponseBody
+    public Result addMessage(@AuthenticationPrincipal User sessionUser,
                              @RequestParam Long id, @RequestParam String subject,
-                              @RequestParam String messageContent, @RequestParam MessageType messageType) {
-        if(id == null || subject == null || messageContent == null || messageType == null ||
-                !sessionUser.getId().equals(id)){
-            return "error";
+                             @RequestParam String messageContent, @RequestParam MessageType messageType) {
+        if (subject == null || messageContent == null || messageType == null ||
+                !sessionUser.getId().equals(id)) {
+            return new Result(Collections.singletonList("error"), false);
         }
         User user = userService.getUserById(id);
         messageService.createMessage(user, messageContent, subject, messageType);
-        return "user/contact";
+        return new Result(Collections.singletonList("success"), true);
     }
 }

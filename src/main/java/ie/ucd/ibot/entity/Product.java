@@ -2,7 +2,6 @@ package ie.ucd.ibot.entity;
 
 import ie.ucd.ibot.validation.ValidImage;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
