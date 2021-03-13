@@ -1,0 +1,34 @@
+before_script:
+ - echo "Starting build..."
+
+after_script:
+ - echo "App deployed."
+ 
+cache:
+ paths:
+ - /root/.m2/repository
+ 
+stages:
+ - build
+ - deploy
+
+build:
+ stage: build
+ image: maven:3.6.3-jdk-8
+ script:
+ - mvn clean package
+ tags:
+ - docker
+ 
+staging:
+ stage: deploy
+ image: ruby:2.4
+ script:
+ - apt-get update -qy
+ - apt-get install -y ruby-dev
+ - gem install dpl
+ - dpl --provider=heroku --app=internationalbots-staging --api-key=$HEROKU_STAGING_API_KEY
+ only:
+ - master
+ tags:
+ - docker
