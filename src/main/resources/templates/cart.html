@@ -60,7 +60,7 @@
         </tr>
         </tbody>
     </table>
-    <a class="button is-light" th:href="@{/user/checkout}">Checkout</a>
+    <a class="button is-light" th:href="@{/user/checkout}" th:if="${cart.getTotal() > 0}">Checkout</a>
 </div>
 <footer th:replace="fragments/general.html :: footer"></footer>
 </body>
