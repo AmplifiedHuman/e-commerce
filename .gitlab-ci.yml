@@ -28,9 +28,6 @@ staging:
  - apt-get install -y ruby-dev
  - gem install dpl
  - dpl --provider=heroku --app=internationalbots-staging --api-key=$HEROKU_STAGING_API_KEY
- environment:
- name: staging
- url: https://internationalbots-staging.herokuapp.com/
  only:
  - master
  tags:
