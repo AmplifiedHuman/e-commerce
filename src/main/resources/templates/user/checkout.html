@@ -17,10 +17,10 @@
 
 <body>
 <header th:replace="fragments/general.html :: header"></header>
-<div class="main-container container my-6 payment-container">
-    <div>
-        <h1 class="title is-2 has-text-centered mb-6">
-            Checkout</h1>
+
+<div class="main-container my-6 is-flex is-justify-content-center">
+    <div class="payment-container is-flex-grow-5 mx-3">
+        <h1 class="title is-2 has-text-centered mb-6">Checkout</h1>
         <div>
             <h1 class="subtitle has-text-centered"
                 th:text="${'Total: ' + #numbers.formatCurrency(user.getCart().getTotal())}"></h1>
