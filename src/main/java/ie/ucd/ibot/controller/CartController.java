@@ -61,7 +61,10 @@ public class CartController {
         } else {
             item = cartService.addCartItem(user.getId(), productID, quantity);
         }
-        return getStringMap(item);
+        if (item != null) {
+            return getStringMap(item);
+        }
+        return new HashMap<>();
     }
 
     @ResponseBody
@@ -79,7 +82,6 @@ public class CartController {
     }
 
     private Map<String, ?> getStringMap(CartItem item) {
-        assert item != null;
         Map<String, Object> map = new HashMap<>();
         map.put("count", item.getQuantity());
         map.put("price", new Numbers(Locale.US).formatCurrency(item.getPrice()));

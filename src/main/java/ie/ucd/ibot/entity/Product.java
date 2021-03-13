@@ -35,7 +35,7 @@ public class Product implements Serializable {
     private Set<Category> categories;
 
     @Column
-    @Positive(message = "Quantity must be greater than 1")
+    @PositiveOrZero(message = "Quantity cannot be negative")
     private int quantity;
 
     @Column

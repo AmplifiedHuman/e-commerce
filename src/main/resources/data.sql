@@ -14,7 +14,7 @@ VALUES ('FEATURED');
 /*Electronics*/
 INSERT INTO product (created_date, description, discount_rate, imageurl, is_hidden, name, price, quantity)
 VALUES (current_timestamp(),'Sony Playstation 5 - Disk Edition. Purchase the best gaming console at the cheapest price in the world. !100% Legit, No Scam! Save the most amount of money compared to all existing websites.' ,
-        0.1, 'https://res.cloudinary.com/internationalbots/image/upload/v1615599197/product-1.jpg', 0, 'Playstation 5', 3.123, 35);
+        0.1, 'https://res.cloudinary.com/internationalbots/image/upload/v1615599197/product-1.jpg', 0, 'Playstation 5', 3.123, 0);
 INSERT INTO product (created_date, description, discount_rate, imageurl, is_hidden, name, price, quantity)
 VALUES (current_timestamp(),'IBOT Series Pro Mechanical Keyboard - Linear Red switches, perfect for Gaming and Work. Custimizable RGB with built in Software and a on board scroll wheel to adjust volume and change songs etc.',
         0, 'https://res.cloudinary.com/internationalbots/image/upload/v1615601520/product-2.png', 0, 'IBOT Mechanical Keyboard', 149.99, 35);

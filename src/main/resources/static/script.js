@@ -112,10 +112,14 @@ const minusButton = () => {
     }
 }
 
-const addToCart = (productID) => {
+const addToCart = (productID, isBuyNow) => {
     const quantityField = document.querySelector("#product-quantity");
     const quantity = parseInt(quantityField.textContent);
+    const baseURL = window.location.origin;
     editCart(productID, quantity, true, false, null);
+    if (isBuyNow) {
+        window.location = baseURL + "/cart/";
+    }
 }
 
 updateTotal(false).catch(e => console.log(e));
@@ -157,7 +161,7 @@ function viewMessageAdmin(id) {
         url: "/admin/contact/" + id,
         success: function (result) {
             $("#contact-view").html(result);
-            if(document.getElementById('messageType').textContent === "ANSWERED"){
+            if (document.getElementById('messageType').textContent === "ANSWERED") {
                 $("#reply-box").hide();
             }
         }
@@ -223,10 +227,10 @@ const removeProduct = async (id) => {
 updateTotal(false).catch(e => console.log(e));
 search();
 
-function exportUserDataPdf(){
-    var doc = new jsPDF();
+function exportUserDataPdf() {
+    const doc = new jsPDF();
     doc.fromHTML($('#user-data').html(), 15, 15, {
         'width': 170,
     });
     doc.save('your-data.pdf');
-};
+}
