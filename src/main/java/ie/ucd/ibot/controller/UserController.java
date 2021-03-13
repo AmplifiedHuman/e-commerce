@@ -137,4 +137,11 @@ public class UserController {
         messageService.createMessage(user, messageContent, subject, messageType);
         return new Result(Collections.singletonList("success"), true);
     }
+
+    @GetMapping("/gdpr")
+    public String viewGdpr(@AuthenticationPrincipal User sessionUser, Model model) {
+        User user = userService.getUserById(sessionUser.getId());
+        model.addAttribute("user", user);
+        return "user/gdpr";
+    }
 }

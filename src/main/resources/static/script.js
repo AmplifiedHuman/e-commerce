@@ -222,3 +222,11 @@ const removeProduct = async (id) => {
 
 updateTotal(false).catch(e => console.log(e));
 search();
+
+function exportUserDataPdf(){
+    var doc = new jsPDF();
+    doc.fromHTML($('#user-data').html(), 15, 15, {
+        'width': 170,
+    });
+    doc.save('your-data.pdf');
+};

@@ -15,8 +15,8 @@
                         <option value="General Question">
                             General Question
                         </option>
-                        <option value="Bug Report">
-                            Bug Report
+                        <option value="Data Deletion">
+                            Data Deletion
                         </option>
                         <option th:each="order : ${user.getCustomerOrders()}"
                                 th:value="'Regarding Order #' + ${order.getId()}"

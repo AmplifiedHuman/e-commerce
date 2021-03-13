@@ -182,3 +182,11 @@ svg {
     margin: 0 auto;
 }
 
+.gdrp-box {
+    width: 70%;
+    margin: 0 auto;
+}
+
+#user-data {
+    display: none;
+}
