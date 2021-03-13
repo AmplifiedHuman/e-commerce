@@ -24,20 +24,14 @@
             <th class="has-text-centered">Date</th>
             <th class="has-text-centered">Status</th>
             <th class="has-text-centered">Total</th>
-            <th></th>
         </tr>
         </thead>
-        <tbody>
-        <tr th:each="order : ${orders}">
+        <tbody class="clickable">
+        <tr th:each="order : ${orders}" th:attr="onclick=|location.href='@{/user/order/{id}(id=${order.getId()})}'|">
             <td th:text="${'#' + order.getId()}"></td>
             <td th:text="${#dates.format(order.getCreatedDate(), 'd-M-yyyy')}" class="has-text-centered"></td>
             <td th:text="${order.getStatus().name()}" class="has-text-centered"></td>
             <td th:text="${#numbers.formatCurrency(order.getTotal())}" class="has-text-centered"></td>
-            <td>
-                <a class="button is-small is-info is-rounded" th:href="@{/user/order/{id}(id=${order.getId()})}">
-                    View
-                </a>
-            </td>
         </tr>
         </tbody>
     </table>

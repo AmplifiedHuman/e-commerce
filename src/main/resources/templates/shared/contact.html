@@ -25,7 +25,7 @@
             </button>
         </div>
         <table class="table is-hoverable is-fullwidth messages">
-            <tbody>
+            <tbody class="clickable">
             <tr th:each="message : ${messages}" th:attr="onclick=|viewMessage(${message.id})|"
                 sec:authorize="hasAnyRole('ROLE_USER')">
                 <td th:text="${#dates.format(message.getCreatedDate(), 'd-M-yyyy')}" class="has-text-centered"></td>

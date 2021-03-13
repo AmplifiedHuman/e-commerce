@@ -190,3 +190,7 @@ svg {
 #user-data {
     display: none;
 }
+
+.clickable tr {
+    cursor: pointer;
+}
