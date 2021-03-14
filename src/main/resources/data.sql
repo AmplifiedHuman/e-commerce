@@ -129,11 +129,11 @@ VALUES (8, 'ELECTRONICS');
 
 /* Users (passwords are equal to emails)*/
 /* User - user@gmail.com Password:user@gmail.com */
-INSERT INTO user(address, email, enabled, first_name, last_name, locked, password, user_role, cart_id)
+INSERT INTO users(address, email, enabled, first_name, last_name, locked, password, user_role, cart_id)
 VALUES ('University College Dublin Belfield, Dublin 4, Ireland.', 'user@gmail.com', true, 'John', 'Doe',
         false, '$2y$12$BCQxQr5YQZXNXW0zDRLEteDd0.AebaCwFiN75DrzV0O3S5uwwBzAK', 'ROLE_USER', NULL);
 /* Owner - admin@gmail.com Password:admin@gmail.com */
-INSERT INTO user(address, email, enabled, first_name, last_name, locked, password, user_role, cart_id)
+INSERT INTO users(address, email, enabled, first_name, last_name, locked, password, user_role, cart_id)
 VALUES ('University College Dublin Belfield, Dublin 4, Ireland.', 'admin@gmail.com', true, 'Shop', 'Owner',
         false, '$2y$12$mLgWin7zUOASwe7ybRNAceoiv4ENXhyJXTb/MFtUT4fix0p2kEqAO', 'ROLE_ADMIN', NULL);
 
