@@ -26,10 +26,11 @@ build-prod:
  script:
  - mvn clean package -Pprod
  tags:
- - prod
+ - docker
  
 staging:
  stage: deploy
+ needs: [build-dev]
  image: ruby:2.4
  script:
  - apt-get update -qy
@@ -43,6 +44,7 @@ staging:
 
 deploy-prod:
  stage: deploy
+ needs: [build-prod]
  image: ruby:2.4
  script:
  - apt-get update -qy
@@ -52,4 +54,4 @@ deploy-prod:
  only:
  - master
  tags:
- - prod
+ - docker
