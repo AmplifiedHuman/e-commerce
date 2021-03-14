@@ -75,21 +75,29 @@ hr {
 }
 
 /*Waves*/
-.wave-container {
+.wave-container .hero-body {
     position: relative;
     background: #0D5F82;
     color: #FFF;
     text-align: center;
     overflow: hidden;
-
 }
 
 .wave-container svg {
     display: block;
 }
 
+.hero-body {
+    margin: 0;
+    border: none;
+    border-image-width: 0;
+}
+
 .waves {
     background-color: white;
+    border: none;
+    margin-top: -1px;
+    color: white;
 }
 
 /* 404 page credits: https://codepen.io/saransh/pen/aezht*/
