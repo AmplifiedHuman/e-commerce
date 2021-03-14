@@ -16,7 +16,7 @@ build:
  stage: build
  image: maven:3.6.3-jdk-8
  script:
- - mvn clean package -Pprod
+ - mvn clean install -P prod
  tags:
  - docker
  
