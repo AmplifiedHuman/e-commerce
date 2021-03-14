@@ -43,7 +43,7 @@
                         <label th:field="*{tempImage}" class="subtitle">Image</label>
                     </p>
                     <input type="file" th:field="*{tempImage}" class="input" accept=".png,.jpeg,.jpg,.gif,.svg"
-                           >
+                           required>
                     <p th:each="error: ${#fields.errors('tempImage')}" class="has-text-danger"
                        th:text="1">Validation error</p>
                 </div>
