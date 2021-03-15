@@ -248,6 +248,7 @@ const updateSearchResults = async () => {
             link.href = baseURL + "/product/" + json[i].id;
             link.classList.add("search-result");
             link.textContent = json[i].name;
+            link.tabIndex = 0;
             searchBox.appendChild(link);
         }
     }
@@ -258,8 +259,10 @@ const debounceFunction = (func, delay) => {
     timerId = setTimeout(func, delay);
 }
 
-searchInput.addEventListener('keydown', () => {
-    debounceFunction(updateSearchResults, 200);
+searchInput.addEventListener('keydown', (event) => {
+    if (event.keyCode !== 9) {
+        debounceFunction(updateSearchResults, 200);
+    }
 })
 
 updateTotal(false).catch(e => console.log(e));
