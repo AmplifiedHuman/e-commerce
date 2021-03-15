@@ -72,7 +72,7 @@ VALUES (current_timestamp(),'Messi - 2021 Edition Biography on how a young Argen
         0.16, 'https://res.cloudinary.com/internationalbots/image/upload/v1615601511/product-17.jpg', 0, 'Messi - 2021 Edition', 23.99, 35);
 
 INSERT INTO product (created_date, description, discount_rate, imageurl, is_hidden, name, price, quantity)
-VALUES (current_timestamp(),'Jaime Oliver Cook Book. 5 Ingredients - Quick & Easy Food, most Straight forward book',
+VALUES (current_timestamp(),'Jamie Oliver Cook Book. 5 Ingredients - Quick & Easy Food, most Straight forward book',
         0, 'https://res.cloudinary.com/internationalbots/image/upload/v1615601516/product-18.jpg', 0, 'Jaime Oliver''s - 5 Ingredients', 32, 35);
 
 INSERT INTO product (created_date, description, discount_rate, imageurl, is_hidden, name, price, quantity)

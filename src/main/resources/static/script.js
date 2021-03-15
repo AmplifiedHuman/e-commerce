@@ -224,9 +224,6 @@ const removeProduct = async (id) => {
     }
 }
 
-updateTotal(false).catch(e => console.log(e));
-search();
-
 function exportUserDataPdf() {
     const doc = new jsPDF();
     doc.fromHTML($('#user-data').html(), 15, 15, {
@@ -234,3 +231,36 @@ function exportUserDataPdf() {
     });
     doc.save('your-data.pdf');
 }
+
+let timerId;
+const searchInput = document.querySelector("#search-input");
+
+const updateSearchResults = async () => {
+    const baseURL = window.location.origin;
+    const searchBox = document.querySelector('.search-result-box');
+    const searchString = searchInput.value;
+    searchBox.innerHTML = "";
+    if (searchString !== null && searchString.trim() !== '') {
+        const response = await fetch(baseURL + "/instant-search?name=" + encodeURI(searchString));
+        const json = await response.json();
+        for (let i = 0; i < json.length; i++) {
+            let link = document.createElement("a");
+            link.href = baseURL + "/product/" + json[i].id;
+            link.classList.add("search-result");
+            link.textContent = json[i].name;
+            searchBox.appendChild(link);
+        }
+    }
+}
+
+const debounceFunction = (func, delay) => {
+    clearTimeout(timerId);
+    timerId = setTimeout(func, delay);
+}
+
+searchInput.addEventListener('keydown', () => {
+    debounceFunction(updateSearchResults, 200);
+})
+
+updateTotal(false).catch(e => console.log(e));
+search();

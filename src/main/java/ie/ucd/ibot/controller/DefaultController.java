@@ -1,5 +1,6 @@
 package ie.ucd.ibot.controller;
 
+import ie.ucd.ibot.entity.InstantSearchResult;
 import ie.ucd.ibot.entity.Product;
 import ie.ucd.ibot.entity.User;
 import ie.ucd.ibot.entity.UserRole;
@@ -14,7 +15,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -68,7 +71,7 @@ public class DefaultController {
                          @RequestParam("size") Optional<Integer> size, @RequestParam Optional<String> name,
                          @AuthenticationPrincipal User sessionUser) {
         int currentPage = page.orElse(1);
-        int pageSize = size.orElse(5);
+        int pageSize = size.orElse(7);
         String s = name.orElse("");
         Page<Product> productPage;
         if (sessionUser == null || sessionUser.getUserRole().equals(UserRole.ROLE_USER)) {
@@ -83,6 +86,25 @@ public class DefaultController {
         model.addAttribute("searchString", s);
         return "search";
     }
+
+    @ResponseBody
+    @GetMapping("/instant-search")
+    public List<InstantSearchResult> instantSearch(@RequestParam("size") Optional<Integer> size,
+                                                   @RequestParam Optional<String> name,
+                                                   @AuthenticationPrincipal User sessionUser) {
+        // limit suggestions to top 5
+        int pageSize = size.orElse(5);
+        String s = name.orElse("");
+        Page<Product> productPage;
+        if (sessionUser == null || sessionUser.getUserRole().equals(UserRole.ROLE_USER)) {
+            productPage = productService.findByName(s, PageRequest.of(0, pageSize), false);
+        } else {
+            productPage = productService.findByName(s, PageRequest.of(0, pageSize), true);
+        }
+        return productPage.map(
+                (product -> new InstantSearchResult(product.getId(), product.getName(), product.getPrice()))).toList();
+    }
+
 
     @GetMapping("/product/{id}")
     public String product(Model model, @PathVariable Long id) {
