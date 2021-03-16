@@ -86,12 +86,14 @@ const updateTotal = async (updateCartPrice) => {
     const response = await fetch(baseURL + "/cart/total");
     const responseText = await response.text();
     let total = document.querySelector("#cart-total-amount");
+    let mobileTotal = document.querySelector("#cart-total-amount-mobile");
     if (updateCartPrice) {
         const cartPrice = document.querySelector("#cart-total-price");
         cartPrice.textContent = responseText;
     }
     if (total) {
         total.textContent = responseText;
+        mobileTotal.textContent = responseText;
         return total.textContent;
     }
     return null;
@@ -121,9 +123,6 @@ const addToCart = (productID, isBuyNow) => {
         window.location = baseURL + "/cart/";
     }
 }
-
-updateTotal(false).catch(e => console.log(e));
-search();
 
 function backButton() {
     window.history.back();

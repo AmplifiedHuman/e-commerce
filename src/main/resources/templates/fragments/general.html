@@ -12,7 +12,15 @@
                 <img id="ibot-logo" th:src="@{/images/IBOT_logo.png}" width="50" height="50" alt="logo" src=""/>
             </a>
             <a class="navbar-item is-size-5" th:href="@{/}">IBOT</a>
-            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false"
+            <div class="is-hidden-desktop navbar-item" style="margin-left: auto">
+                <a class="button" th:href="@{/cart/}" sec:authorize="!hasAnyRole('ROLE_ADMIN')">
+                            <span class="icon">
+                              <i class="fas fa-shopping-basket"></i>
+                            </span>
+                    <span id="cart-total-amount-mobile">Price</span>
+                </a>
+            </div>
+            <a role="button" class="navbar-burger mx-0" aria-label="menu" aria-expanded="false"
                data-target="navbarBasicExample">
                 <span aria-hidden="true"></span>
                 <span aria-hidden="true"></span>
@@ -56,7 +64,8 @@
             <div class="navbar-end">
                 <div class="navbar-item">
                     <div class="buttons">
-                        <a class="button" th:href="@{/cart/}" sec:authorize="!hasAnyRole('ROLE_ADMIN')">
+                        <a class="button is-hidden-touch" th:href="@{/cart/}"
+                           sec:authorize="!hasAnyRole('ROLE_ADMIN')">
                             <span class="icon">
                               <i class="fas fa-shopping-basket"></i>
                             </span>
