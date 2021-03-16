@@ -48,6 +48,8 @@
     </table>
     <h2 class="is-capitalized has-text-weight-bold">Stripe Payment ID:</h2>
     <p th:text="${order.getPaymentId()}" class="mb-2"></p>
+    <h2 class="is-capitalized has-text-weight-bold">Customer:</h2>
+    <p th:text="${order.getUser().getEmail()}" class="mb-2"></p>
     <h2 class="is-capitalized has-text-weight-bold">Shipping Address:</h2>
     <p th:text="${order.getShippingAddress()}" class="mb-2"></p>
     <h2 class="is-capitalized has-text-weight-bold">Status:</h2>
