@@ -209,6 +209,7 @@ const sendMessage = async (id) => {
     }
     location.reload();
 }
+
 const removeProduct = async (id) => {
     const baseURL = window.location.origin;
     let data = new URLSearchParams();
@@ -262,7 +263,26 @@ searchInput.addEventListener('keydown', (event) => {
     if (event.keyCode !== 9) {
         debounceFunction(updateSearchResults, 200);
     }
-})
+});
+
+// loading
+const loadAddUpdateButton = () => {
+    const addForm = document.querySelector("#add-form");
+    const editForm = document.querySelector("#edit-form");
+    if (addForm !== null && addForm.checkValidity()) {
+        const addButton = document.querySelector("#add-button");
+        addButton.addEventListener("click", () => {
+            addButton.classList.add("is-loading");
+        });
+    }
+    if (editForm !== null && editForm.checkValidity()) {
+        const updateButton = document.querySelector("#update-button");
+        updateButton.addEventListener("click", () => {
+            updateButton.classList.add("is-loading");
+        });
+    }
+}
 
 updateTotal(false).catch(e => console.log(e));
+loadAddUpdateButton();
 search();
