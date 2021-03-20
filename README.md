@@ -54,57 +54,57 @@ Visit [localhost:8080](http://localhost:8080/)
 Use 4242 4242 4242 4242 as the test card then fill in a random csv and postal code.
 
 ### Wireframe
-Link to [Wireframe](src/readme-resources/wireframe.pdf)
+Link to [Wireframe](readme-resources/wireframe.pdf)
 
 ### Screenshots
 ### Guest index page
-![Alt-text](src/readme-resources/img/index.png "Guest index")
+![Alt-text](readme-resources/img/index.png "Guest index")
 ### Guest login page
-![Alt-text](src/readme-resources/img/login.png "login")
+![Alt-text](readme-resources/img/login.png "login")
 
 ### User index page
-![Alt-text](src/readme-resources/img/user-index.png "User Index")
+![Alt-text](readme-resources/img/user-index.png "User Index")
 
 ### User Browse Products page
-![Alt-text](src/readme-resources/img/user-products.png "User Products")
+![Alt-text](readme-resources/img/user-products.png "User Products")
 ### User Product page
-![Alt-text](src/readme-resources/img/user-product-page.png "User Products Page")
+![Alt-text](readme-resources/img/user-product-page.png "User Products Page")
 ### User Featured page
-![Alt-text](src/readme-resources/img/user-featured.png "User Featured")
+![Alt-text](readme-resources/img/user-featured.png "User Featured")
 ### User Offers page
-![Alt-text](src/readme-resources/img/user-offers.png "User Offers")
+![Alt-text](readme-resources/img/user-offers.png "User Offers")
 ### User Electronics page
-![Alt-text](src/readme-resources/img/user-electronics.png "User Electronics")
+![Alt-text](readme-resources/img/user-electronics.png "User Electronics")
 ### User Food page
-![Alt-text](src/readme-resources/img/user-food.png "User Food")
+![Alt-text](readme-resources/img/user-food.png "User Food")
 ### User Books page
-![Alt-text](src/readme-resources/img/user-books.png "User Books")
+![Alt-text](readme-resources/img/user-books.png "User Books")
 
 ### User Cart page
-![Alt-text](src/readme-resources/img/user-cart.png "User Cart")
+![Alt-text](readme-resources/img/user-cart.png "User Cart")
 ### User Checkout page
-![Alt-text](src/readme-resources/img/user-checkout.png "User Checkout")
+![Alt-text](readme-resources/img/user-checkout.png "User Checkout")
 
 ### User Contact page
-![Alt-text](src/readme-resources/img/user-contact.png "User Contact")
+![Alt-text](readme-resources/img/user-contact.png "User Contact")
 ### User Contact New Message page
-![Alt-text](src/readme-resources/img/user-contact-new-message.png "User contact msg")
+![Alt-text](readme-resources/img/user-contact-new-message.png "User contact msg")
 ### User GDPR page
-![Alt-text](src/readme-resources/img/user-gdpr.png "User gdpr")
+![Alt-text](readme-resources/img/user-gdpr.png "User gdpr")
 
 ### Admin index page
-![Alt-text](src/readme-resources/img/admin-index.png "Admin index")
+![Alt-text](readme-resources/img/admin-index.png "Admin index")
 ### Admin index page
-![Alt-text](src/readme-resources/img/admin-products-page.png "Admin products page")
+![Alt-text](readme-resources/img/admin-products-page.png "Admin products page")
 ### Admin Orders page
-![Alt-text](src/readme-resources/img/admin-orders.png "Admin orders page")
+![Alt-text](readme-resources/img/admin-orders.png "Admin orders page")
 ### Admin Update Order page
-![Alt-text](src/readme-resources/img/admin-update-order.png "Admin update orders page")
+![Alt-text](readme-resources/img/admin-update-order.png "Admin update orders page")
 ### Admin Product page
-![Alt-text](src/readme-resources/img/admin-products-page.png "Admin products page")
+![Alt-text](readme-resources/img/admin-products-page.png "Admin products page")
 ### Admin Add Product page
-![Alt-text](src/readme-resources/img/admin-add-product.png "Admin add product page")
+![Alt-text](readme-resources/img/admin-add-product.png "Admin add product page")
 ### Admin Edit Product page
-![Alt-text](src/readme-resources/img/admin-edit-product.png "Admin edit product page")
+![Alt-text](readme-resources/img/admin-edit-product.png "Admin edit product page")
 
 
