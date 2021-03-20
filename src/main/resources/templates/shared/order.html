@@ -29,7 +29,7 @@
         <tr>
             <th></th>
             <th class="has-text-centered">Total</th>
-            <th th:text="${#numbers.formatCurrency(order.getTotal())}" class="has-text-right"
+            <th th:text="${'€' + #numbers.formatCurrency(order.getTotal()).substring(1)}" class="has-text-right"
                 id="cart-total-price"></th>
             <th></th>
         </tr>
@@ -42,7 +42,8 @@
                     <p th:text="${item.getQuantity()}" class="has-text-centered mx-3"></p>
                 </div>
             </td>
-            <td th:text="${#numbers.formatCurrency(item.getPrice())}" class="has-text-right item-price"></td>
+            <td th:text="${'€' + #numbers.formatCurrency(item.getPrice()).substring(1)}"
+                class="has-text-right item-price"></td>
         </tr>
         </tbody>
     </table>

@@ -32,14 +32,16 @@
             Request Data Deletion
         </p>
         <p class="is-3 has-text-justified">
-            If you would like to have your personal data deleted, please submit a support ticket through our contact page.
+            If you would like to have your personal data deleted, please submit a support ticket through our contact
+            page.
             Choose “Data Deletion” as the subject. We will review your request and reply as soon as possible.
         </p>
         <div class="has-text-right">
             <a class="button is-normal is-info mt-2" th:href="@{/user/contact}" sec:authorize="hasAnyRole('ROLE_USER')">
                 Request Deletion
             </a>
-            <a class="button is-normal is-danger mt-2" th:attr="onclick=|exportUserDataPdf()|" sec:authorize="hasAnyRole('ROLE_USER')">
+            <a class="button is-normal is-danger mt-2" th:attr="onclick=|exportUserDataPdf()|"
+               sec:authorize="hasAnyRole('ROLE_USER')">
                 Get My Data
             </a>
         </div>
@@ -79,7 +81,7 @@
                 <td th:text="${#dates.format(order.getCreatedDate(), 'd-M-yyyy')}"></td>
                 <td th:text="${order.getStatus().name()}"></td>
                 <td th:text="${order.getShippingAddress()}"></td>
-                <td th:text="${#numbers.formatCurrency(order.getTotal())}"></td>
+                <td th:text="${'€' + #numbers.formatCurrency(order.getTotal()).substring(1)}"></td>
             </tr>
             </tbody>
         </table>

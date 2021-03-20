@@ -35,10 +35,10 @@
             </div>
             <div class="container is-left-content-center is-flex mt-3">
                 <p class="is-4 has-text-primary subtitle is-flex-shrink-0"
-                   th:text="${#numbers.formatCurrency(product.price)}"></p>
+                   th:text="${'€' + #numbers.formatCurrency(product.price).substring(1)}"></p>
                 <p class="is-size-7 has-text-danger strike-through is-flex-shrink-0"
                    th:text="${product.getDiscountRate == 0} ? '' :
-                               ${#numbers.formatCurrency(product.getOriginalPrice)}"></p>
+                               ${'€' + #numbers.formatCurrency(product.getOriginalPrice).substring(1)}"></p>
             </div>
             <div class="is-flex is-align-items-center">
                 <div class="is-flex is-align-items-center is-justify-center is-marginless is-narrow"
@@ -53,7 +53,7 @@
                         <i class="fas fa-plus"></i>
                     </button>
                 </div>
-                <div class="mx-2" >
+                <div class="mx-2">
                     <span th:text="${'In Stock: ' + product.quantity}" class="has-text-grey">Quantity</span>
                 </div>
             </div>

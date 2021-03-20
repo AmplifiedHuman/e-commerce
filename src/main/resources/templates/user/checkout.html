@@ -23,7 +23,7 @@
         <h1 class="title is-2 has-text-centered mb-6">Checkout</h1>
         <div>
             <h1 class="subtitle has-text-centered"
-                th:text="${'Total: ' + #numbers.formatCurrency(user.getCart().getTotal())}"></h1>
+                th:text="${'Total: €' + #numbers.formatCurrency(user.getCart().getTotal()).substring(1)}"></h1>
             <form id='payment-form'>
                 <div class="field">
                     <p class="my-3">

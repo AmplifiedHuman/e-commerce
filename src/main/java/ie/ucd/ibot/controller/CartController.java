@@ -45,8 +45,7 @@ public class CartController {
     @ResponseBody
     @GetMapping("/total")
     public String getTotal(@AuthenticationPrincipal User user) {
-        Numbers numbers = new Numbers(Locale.US);
-        return numbers.formatCurrency(user == null ? cart.getTotal() :
+        return formatPrice(user == null ? cart.getTotal() :
                 cartService.getCartByUserId(user.getId()).getTotal());
     }
 
@@ -84,8 +83,13 @@ public class CartController {
     private Map<String, ?> getStringMap(CartItem item) {
         Map<String, Object> map = new HashMap<>();
         map.put("count", item.getQuantity());
-        map.put("price", new Numbers(Locale.US).formatCurrency(item.getPrice()));
+        map.put("price", formatPrice(item.getPrice()));
         return map;
+    }
+
+    private String formatPrice(double price) {
+        String currency = new Numbers(Locale.US).formatCurrency(price);
+        return "€" + currency.substring(1);
     }
 
     @ResponseBody

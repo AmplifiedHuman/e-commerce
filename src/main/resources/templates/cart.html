@@ -30,7 +30,8 @@
         <tr>
             <th></th>
             <th class="has-text-centered">Total</th>
-            <th th:text="${#numbers.formatCurrency(cart.getTotal())}" class="has-text-right" id="cart-total-price"></th>
+            <th th:text="${'€' + #numbers.formatCurrency(cart.getTotal()).substring(1)}" class="has-text-right"
+                id="cart-total-price"></th>
             <th></th>
         </tr>
         </tfoot>
@@ -50,7 +51,8 @@
                     </button>
                 </div>
             </td>
-            <td th:text="${#numbers.formatCurrency(item.getPrice())}" class="has-text-right item-price"></td>
+            <td th:text="${'€' + #numbers.formatCurrency(item.getPrice()).substring(1)}"
+                class="has-text-right item-price"></td>
             <td>
                 <button class="button is-small is-danger is-rounded"
                         th:attr="onclick=|deleteFromCart(${item.product.id}, this)|">
