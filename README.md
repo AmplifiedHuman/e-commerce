@@ -60,22 +60,16 @@ Visit [localhost:8080](http://localhost:8080/)
 | ------------- |:-------------:|
 | user@gmail.com|user@gmail.com |
 
-### Admin/Owner account
-
-| Email          | Password      |
-| -------------  |:-------------:|
-| REDACTED|REDACTED|
-
 ### Credit Card
 
 Use 4242 4242 4242 4242 as the test card then fill in a random csv and postal code.
 
 ## Authors
 
-- Chee Guan Tee (Jason) - @AmplifiedHuman
-- Choon Wei Tong - @choonjerald
-- Simonas Ramonas - @SimonRamone
-- Shijie Liu - @shijieliu789
+- Chee Guan Tee (Jason) - [@AmplifiedHuman](https://github.com/AmplifiedHuman)
+- Choon Wei Tong - [@choonjerald](https://github.com/choonjerald)
+- Simonas Ramonas - [@SimonRamone](https://github.com/SimonRamone)
+- Shijie Liu - [@shijieliu789](https://github.com/shijieliu789)
 
 ## Acknowledgments
 
